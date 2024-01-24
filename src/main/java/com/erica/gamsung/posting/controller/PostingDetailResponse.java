@@ -1,5 +1,6 @@
 package com.erica.gamsung.posting.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class PostingDetailResponse {
     private Long id;
     private String imageUrl;
     private String fixedContent;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime reservedAt;
     private List<String> contents;
 
