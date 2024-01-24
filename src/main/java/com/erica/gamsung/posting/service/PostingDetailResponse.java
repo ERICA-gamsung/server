@@ -1,4 +1,4 @@
-package com.erica.gamsung.posting.controller;
+package com.erica.gamsung.posting.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

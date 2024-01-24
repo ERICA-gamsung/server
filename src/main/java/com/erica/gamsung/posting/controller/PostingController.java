@@ -1,5 +1,6 @@
 package com.erica.gamsung.posting.controller;
 
+import com.erica.gamsung.posting.service.PostingDetailResponse;
 import com.erica.gamsung.posting.service.PostingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

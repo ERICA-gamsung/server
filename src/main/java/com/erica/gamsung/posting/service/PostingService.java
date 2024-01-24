@@ -1,6 +1,5 @@
 package com.erica.gamsung.posting.service;
 
-import com.erica.gamsung.posting.controller.PostingDetailResponse;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
