@@ -18,6 +18,8 @@ public class Posting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long reservationId;
+    private Long userId;
     private String imageUrl;
     private String fixedContent;
     private LocalDateTime reservedAt;
