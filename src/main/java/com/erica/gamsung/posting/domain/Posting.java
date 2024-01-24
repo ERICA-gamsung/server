@@ -1,9 +1,7 @@
 package com.erica.gamsung.posting.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.erica.gamsung.posting.utils.StringListConverter;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,5 +21,7 @@ public class Posting {
     private String imageUrl;
     private String fixedContent;
     private LocalDateTime reservedAt;
+    @Convert(converter = StringListConverter.class)
     private List<String> contents;
 }
+
