@@ -6,8 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * {
+/*
  * 	"id": 1,
  * 	"image_url":"",
  * 	"fixed_content" : null,
@@ -16,9 +15,9 @@ import java.util.List;
  * 		"우리 가게에 놀러오세요!",
  * 		"오늘 할인해요!",
  * 		"만나서 반갑습니다",
- *  },
- * }
+ * 	}
  */
+
 @Getter
 public class PostingDetailResponse {
     private Long id;

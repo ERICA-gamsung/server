@@ -21,7 +21,6 @@ public class PostingService {
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
 
         return new PostingDetailResponse(posting.getId(), posting.getImageUrl(), posting.getFixedContent(), posting.getReservedAt(), posting.getContents());
-//        return new PostingDetailResponse(1L, "", "1", LocalDateTime.now(), List.of("안녕하세요", "밥 먹어", "잘가"));
     }
 
     @PostConstruct

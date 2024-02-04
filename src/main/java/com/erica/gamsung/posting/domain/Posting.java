@@ -26,4 +26,3 @@ public class Posting {
     @Convert(converter = StringListConverter.class)
     private List<String> contents;
 }
-
