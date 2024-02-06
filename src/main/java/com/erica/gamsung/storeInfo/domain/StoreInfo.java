@@ -8,6 +8,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -19,8 +22,9 @@ public class StoreInfo {
     private Long id;
     private String name;
     private String type;
-    private String openTime;
-    private String closeTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime openTime;
+    private LocalTime closeTime;
     private String openDay;
     private String address;
     private String phoneNumber;

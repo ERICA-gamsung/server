@@ -2,6 +2,8 @@ package com.erica.gamsung.storeInfo.service;
 
 import lombok.Getter;
 
+import java.time.LocalTime;
+
 /*
  * "name": "감성식당",
  * "type": "음식점",
@@ -17,13 +19,13 @@ public class StoreInfoDetailResponse {
     private Long id;
     private String name;
     private String type;
-    private String openTime;
-    private String closeTime;
+    private LocalTime openTime;
+    private LocalTime closeTime;
     private String openDay;
     private String address;
     private String phoneNumber;
 
-    public StoreInfoDetailResponse(Long id, String name, String type, String openTime, String closeTime, String openDay, String address, String phoneNumber) {
+    public StoreInfoDetailResponse(Long id, String name, String type, LocalTime openTime, LocalTime closeTime, String openDay, String address, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.type = type;
