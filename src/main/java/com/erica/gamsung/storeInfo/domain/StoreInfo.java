@@ -29,8 +29,8 @@ public class StoreInfo {
         this.type = request.getType();
         this.openTime = request.getOpenTime();
         this.closeTime = request.getCloseTime();
-        this.openDay = request.getDay();
+        this.openDay = request.getOpenDay();
         this.address = request.getAddress();
-        this.phoneNumber = request.getPhone();
+        this.phoneNumber = request.getPhoneNumber();
     }
 }
