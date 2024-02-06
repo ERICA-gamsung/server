@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -32,8 +33,8 @@ public class StoreInfoService {
                 1L,
                 "감성식당",
                 "음식점",
-                "09:00",
-                "21:00",
+                LocalTime.of(9, 0, 0),
+                LocalTime.of(21, 0, 0),
                 "월화수목금",
                 "한양대학 1길",
                 "02-1234-5678"
@@ -43,8 +44,8 @@ public class StoreInfoService {
                 2L,
                 "현기식당",
                 "음식점",
-                "11:00",
-                "23:00",
+                LocalTime.of(11, 0, 0),
+                LocalTime.of(22, 0, 0),
                 "월화목금",
                 "한양대학 2길",
                 "02-3253-5678"
@@ -54,8 +55,8 @@ public class StoreInfoService {
                 3L,
                 "종윤식당",
                 "카페",
-                "07:00",
-                "22:00",
+                LocalTime.of(7, 0, 0),
+                LocalTime.of(23, 0, 0),
                 "월화수목금",
                 "한양대학 3길",
                 "02-3258-5678"

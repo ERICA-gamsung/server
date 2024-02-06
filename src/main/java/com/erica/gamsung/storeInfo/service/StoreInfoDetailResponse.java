@@ -1,6 +1,7 @@
 package com.erica.gamsung.storeInfo.service;
 
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 
