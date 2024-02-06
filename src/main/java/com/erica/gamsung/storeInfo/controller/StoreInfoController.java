@@ -13,14 +13,16 @@ public class StoreInfoController {
 
     @GetMapping("/api/v1/storeInfos/{storeInfoId}")
     public StoreInfoDetailResponse getStoreInfoDetail(@PathVariable Long storeInfoId) {
+
         return storeInfoService.getDetail(storeInfoId);
     }
 
-//    @PutMapping("/api/v1/storeInfos/{storeInfoId}")
-//    public UpdateStoreInfoRequest updateStoreInfoDetail(
-//            @PathVariable Long storeInfoId
-//            @RequestBody UpdateStoreInfoRequest request) {
-//        return storeInfoService.updateDetail(storeInfoId, request);
-//    }
+    @PutMapping("/api/v1/storeInfos/{storeInfoId}")
+    public UpdateStoreInfoRequest updateStoreInfoDetail(
+            @PathVariable Long storeInfoId,
+            @RequestBody UpdateStoreInfoRequest request) {
+
+        return storeInfoService.updateDetail(storeInfoId, request);
+    }
 
 }

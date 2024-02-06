@@ -21,15 +21,17 @@ public class StoreInfoService {
                 new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
 
         return StoreInfoDetailResponse.from(storeInfo);
-//        return new StoreInfoDetailResponse(storeInfo.getId(), storeInfo.getName(), storeInfo.getType(), storeInfo.getOpenTime(), storeInfo.getCloseTime(), storeInfo.getAddress(), storeInfo.getAddress(), storeInfo.getAddress());
     }
 
-//    @Transactional
-//    public UpdateStoreInfoRequest updateDetail(Long storeInfoId) {
-//        StoreInfo storeInfo = storeInfoRepository.findById(storeInfoId).orElseThrow(() ->
-//                new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
-//
-//    }
+    @Transactional
+    public UpdateStoreInfoRequest updateDetail(Long id, UpdateStoreInfoRequest request) {
+        StoreInfo storeInfo = storeInfoRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + id));
+
+        storeInfo.update(request);
+
+        return null;
+    }
 
     @PostConstruct
     public void init() {

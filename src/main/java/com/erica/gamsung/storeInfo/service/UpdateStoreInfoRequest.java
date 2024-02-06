@@ -1,10 +1,12 @@
 package com.erica.gamsung.storeInfo.service;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
-@Data
+@Getter
+@NoArgsConstructor
 public class UpdateStoreInfoRequest {
     private Long id;
     private String name;

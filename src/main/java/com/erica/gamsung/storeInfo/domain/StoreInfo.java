@@ -1,5 +1,6 @@
 package com.erica.gamsung.storeInfo.domain;
 
+import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,4 +23,14 @@ public class StoreInfo {
     private String openDay;
     private String address;
     private String phoneNumber;
+
+    public void update(UpdateStoreInfoRequest request) {
+        this.name = request.getName();
+        this.type = request.getType();
+        this.openTime = request.getOpenTime();
+        this.closeTime = request.getCloseTime();
+        this.openDay = request.getDay();
+        this.address = request.getAddress();
+        this.phoneNumber = request.getPhone();
+    }
 }
