@@ -1,6 +1,5 @@
 package com.erica.gamsung.storeInfo.service;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalTime;
@@ -17,13 +16,13 @@ public class UpdateStoreInfoRequest {
     private String phoneNumber;
 
     public UpdateStoreInfoRequest(Long id, String name, String type, LocalTime openTime, LocalTime closeTime, String openDay, String address, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.openDay = openDay;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+        this.setId(id);
+        this.setName(name);
+        this.setType(type);
+        this.setOpenTime(openTime);
+        this.setCloseTime(closeTime);
+        this.setOpenDay(openDay);
+        this.setAddress(address);
+        this.setPhoneNumber(phoneNumber);
     }
 }
