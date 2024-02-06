@@ -5,6 +5,7 @@ import com.erica.gamsung.storeInfo.repository.StoreInfoRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -19,15 +20,16 @@ public class StoreInfoService {
         StoreInfo storeInfo = storeInfoRepository.findById(storeInfoId).orElseThrow(() ->
                 new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
 
-        return new StoreInfoDetailResponse(storeInfo.getId(), storeInfo.getName(), storeInfo.getType(), storeInfo.getOpenTime(), storeInfo.getCloseTime(), storeInfo.getOpenDay(), storeInfo.getAddress(), storeInfo.getPhoneNumber());
+        return StoreInfoDetailResponse.from(storeInfo);
+//        return new StoreInfoDetailResponse(storeInfo.getId(), storeInfo.getName(), storeInfo.getType(), storeInfo.getOpenTime(), storeInfo.getCloseTime(), storeInfo.getAddress(), storeInfo.getAddress(), storeInfo.getAddress());
     }
 
-    public UpdateStoreInfoRequest updateDetail(Long storeInfoId) {
-        StoreInfo storeInfo = storeInfoRepository.findById(storeInfoId).orElseThrow(() ->
-                new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
-
-        return new UpdateStoreInfoRequest(storeInfo.getId(), storeInfo.getName(), storeInfo.getType(), storeInfo.getOpenTime(), storeInfo.getCloseTime(), storeInfo.getOpenDay(), storeInfo.getAddress(), storeInfo.getPhoneNumber());
-    }
+//    @Transactional
+//    public UpdateStoreInfoRequest updateDetail(Long storeInfoId) {
+//        StoreInfo storeInfo = storeInfoRepository.findById(storeInfoId).orElseThrow(() ->
+//                new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
+//
+//    }
 
     @PostConstruct
     public void init() {

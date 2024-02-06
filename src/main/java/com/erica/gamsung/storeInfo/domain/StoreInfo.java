@@ -1,9 +1,6 @@
 package com.erica.gamsung.storeInfo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +16,7 @@ public class StoreInfo {
     private Long id;
     private String name;
     private String type;
-    @DateTimeFormat(pattern = "HH:mm")
+//    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime openTime;
     private LocalTime closeTime;
     private String openDay;

@@ -1,6 +1,8 @@
 package com.erica.gamsung.storeInfo.service;
 
-import lombok.Getter;
+import com.erica.gamsung.storeInfo.domain.StoreInfo;
+import lombok.AccessLevel;
+import lombok.Builder;
 
 import java.time.LocalTime;
 
@@ -14,25 +16,50 @@ import java.time.LocalTime;
  * "phoneNumber": "02-1234-5678"
  */
 
-@Getter
-public class StoreInfoDetailResponse {
-    private Long id;
-    private String name;
-    private String type;
-    private LocalTime openTime;
-    private LocalTime closeTime;
-    private String openDay;
-    private String address;
-    private String phoneNumber;
-
-    public StoreInfoDetailResponse(Long id, String name, String type, LocalTime openTime, LocalTime closeTime, String openDay, String address, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.openDay = openDay;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+@Builder(access = AccessLevel.PRIVATE)
+public record StoreInfoDetailResponse(
+        Long id,
+        String name,
+        String type,
+        LocalTime openTime,
+        LocalTime closeTime,
+        String openDay,
+        String address,
+        String phoneNumber
+) {
+    public static StoreInfoDetailResponse from(StoreInfo storeInfo) {
+        return StoreInfoDetailResponse.builder()
+                .id(storeInfo.getId())
+                .name(storeInfo.getName())
+                .type(storeInfo.getType())
+                .openTime(storeInfo.getOpenTime())
+                .closeTime(storeInfo.getCloseTime())
+                .openDay(storeInfo.getOpenDay())
+                .address(storeInfo.getAddress())
+                .phoneNumber(storeInfo.getPhoneNumber())
+                .build();
     }
 }
+
+//@Getter
+//public class StoreInfoDetailResponse {
+//    private Long id;
+//    private String name;
+//    private String type;
+//    private String openTime;
+//    private String closeTime;
+//    private String openDay;
+//    private String address;
+//    private String phoneNumber;
+//
+//    public StoreInfoDetailResponse(Long id, String name, String type, String openTime, String closeTime, String openDay, String address, String phoneNumber) {
+//        this.id = id;
+//        this.name = name;
+//        this.type = type;
+//        this.openTime = openTime;
+//        this.closeTime = closeTime;
+//        this.openDay = openDay;
+//        this.address = address;
+//        this.phoneNumber = phoneNumber;
+//    }
+//}
