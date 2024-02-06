@@ -3,8 +3,11 @@ package com.erica.gamsung.storeInfo.service;
 import com.erica.gamsung.storeInfo.domain.StoreInfo;
 import com.erica.gamsung.storeInfo.repository.StoreInfoRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -20,6 +23,25 @@ public class StoreInfoService {
                 new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
 
         return new StoreInfoDetailResponse(storeInfo.getId(), storeInfo.getName(), storeInfo.getType(), storeInfo.getOpenTime(), storeInfo.getCloseTime(), storeInfo.getOpenDay(), storeInfo.getAddress(), storeInfo.getPhoneNumber());
+    }
+
+    @Transactional
+    public UpdateStoreInfoRequest updateDetail(
+            @PathVariable Long storeInfoId,
+            @RequestBody UpdateStoreInfoRequest request) {
+        StoreInfo storeInfo = storeInfoRepository.findById(storeInfoId).orElseThrow(() ->
+            new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + storeInfoId));
+
+        storeInfo.setId(request.getId());
+        storeInfo.setName(request.getName());
+        storeInfo.setType(request.getType());
+        storeInfo.setOpenTime(request.getOpenTime());
+        storeInfo.setCloseTime(request.getCloseTime());
+        storeInfo.setOpenDay(request.getOpenDay());
+        storeInfo.setAddress(request.getAddress());
+        storeInfo.setPhoneNumber(request.getPhoneNumber());
+
+        return null;
     }
 
     @PostConstruct

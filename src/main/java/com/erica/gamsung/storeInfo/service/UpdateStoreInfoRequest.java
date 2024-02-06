@@ -1,21 +1,12 @@
 package com.erica.gamsung.storeInfo.service;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalTime;
 
-/*
- * "name": "감성식당",
- * "type": "음식점",
- * "openTime": "09:00",
- * "closeTime": "21:00",
- * "openDay": "월화수목금",
- * "address": "한양대학 1길",
- * "phoneNumber": "02-1234-5678"
- */
-
-@Getter
-public class StoreInfoDetailResponse {
+@Data
+public class UpdateStoreInfoRequest {
     private Long id;
     private String name;
     private String type;
@@ -25,7 +16,7 @@ public class StoreInfoDetailResponse {
     private String address;
     private String phoneNumber;
 
-    public StoreInfoDetailResponse(Long id, String name, String type, LocalTime openTime, LocalTime closeTime, String openDay, String address, String phoneNumber) {
+    public UpdateStoreInfoRequest(Long id, String name, String type, LocalTime openTime, LocalTime closeTime, String openDay, String address, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.type = type;
