@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
+
     public List<MenuListResponse> getMenu(Long userId){
         List<Menu> menu = menuRepository.findByUserId(userId);
         List<MenuListResponse> menuListResponses = new ArrayList<>(); // List 초기화 및 타입 명시
@@ -22,6 +24,15 @@ public class MenuService {
         if (menuListResponses.size()<=0)
             throw new RuntimeException();
         return menuListResponses;
+    }
+    public void putMenu(Menu data){
+//        System.out.println(data);
+        if(data.getId()==null){
+            System.out.println("null");
+        }
+        else{
+            menuRepository.save(data);
+        }
     }
     @PostConstruct
     public void init() {
