@@ -3,36 +3,51 @@ package com.erica.gamsung.menu.service;
 import com.erica.gamsung.menu.domain.Menu;
 import com.erica.gamsung.menu.repository.MenuRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
+@RequiredArgsConstructor
 @Service
+@Transactional
 public class MenuService {
-    @Autowired
-    private MenuRepository menuRepository;
+    private final MenuRepository menuRepository;
 
     public List<MenuListResponse> getMenu(Long userId){
         List<Menu> menu = menuRepository.findByUserId(userId);
         List<MenuListResponse> menuListResponses = new ArrayList<>(); // List 초기화 및 타입 명시
-        for(int i=0;i<menu.size();i++){
-            menuListResponses.add(new MenuListResponse(menu.get(i)));
+        for (Menu value : menu) {
+            menuListResponses.add(new MenuListResponse(value));
         }
         if (menuListResponses.size()<=0)
             throw new RuntimeException();
         return menuListResponses;
     }
-    public void putMenu(Menu data){
-//        System.out.println(data);
-        if(data.getId()==null){
-            System.out.println("null");
+    public void putMenu(Long userId,List<Menu> data){
+        List<Menu> menuList = menuRepository.findByUserId(userId);
+        for(Menu x : menuList){ // 삭제 및 수정
+            delOrMod(x,data,userId);
         }
-        else{
-            menuRepository.save(data);
+        for (Menu nowMenu : data) { //저장
+            nowMenu.setUserId(userId);
+            menuRepository.save(nowMenu);
         }
+    }
+    public void delOrMod(Menu menu,List<Menu> data,Long userId){ //삭제 및 수정 함수
+        for(Menu x  : data){
+            if(Objects.equals(menu.getId(), x.getId())) {
+                x.setUserId(userId);
+                menuRepository.save(x);
+                data.remove(x);
+                return;
+            }
+        }
+        menuRepository.delete(menu);
     }
     @PostConstruct
     public void init() {
