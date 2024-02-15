@@ -6,6 +6,8 @@ import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @RestController
 @RequiredArgsConstructor
 public class StoreInfoController {
@@ -21,7 +23,6 @@ public class StoreInfoController {
     public UpdateStoreInfoRequest updateStoreInfoDetail(
             @PathVariable Long storeInfoId,
             @RequestBody UpdateStoreInfoRequest request) {
-
         return storeInfoService.updateDetail(storeInfoId, request);
     }
 

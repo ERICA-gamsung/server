@@ -3,7 +3,6 @@ package com.erica.gamsung.storeInfo.domain;
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 
@@ -25,12 +24,12 @@ public class StoreInfo {
     private String phoneNumber;
 
     public void update(UpdateStoreInfoRequest request) {
-        this.name = request.getName();
-        this.type = request.getType();
-        this.openTime = request.getOpenTime();
-        this.closeTime = request.getCloseTime();
-        this.openDay = request.getOpenDay();
-        this.address = request.getAddress();
-        this.phoneNumber = request.getPhoneNumber();
+        this.name = request.name();
+        this.type = request.type();
+        this.openTime = request.openTime();
+        this.closeTime = request.closeTime();
+        this.openDay = request.openDay();
+        this.address = request.address();
+        this.phoneNumber = request.phoneNumber();
     }
 }
