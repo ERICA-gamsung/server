@@ -5,10 +5,7 @@ import com.erica.gamsung.menu.repository.MenuRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +22,7 @@ public class MenuService {
             throw new RuntimeException("menulist가 존재하지 않습니다. userid를 확인해주세요.");
         return menuListResponses;
     }
-    public void putMenu(Long userId,List<Menu> data){
+    public List<PutMenuRequest> putMenu(Long userId, List<Menu> data){ //userId 잘못 됐을시 에러 처리 추가할 것
         List<Menu> menuList = menuRepository.findByUserId(userId);
         for(Menu x : menuList){ // 삭제 및 수정
             delOrMod(x,data,userId);
@@ -34,6 +31,7 @@ public class MenuService {
             nowMenu.setUserId(userId);
             menuRepository.save(nowMenu);
         }
+        return menuRepository.findByUserId(userId).stream().map(PutMenuRequest::new).toList();
     }
     public void delOrMod(Menu menu,List<Menu> data,Long userId){ //삭제 및 수정 함수
         for(Menu x  : data){
