@@ -20,7 +20,7 @@ public class MenuController {
         return menuService.getMenu(userId);
     }
     @PutMapping(path = "put/{userId}")
-    public void putMenu(@RequestBody List<Menu> putMenuRequest, @PathVariable("userId") Long userId){
-        menuService.putMenu(userId,putMenuRequest);
+    public List<PutMenuRequest> putMenu(@RequestBody List<Menu> putMenuRequest, @PathVariable("userId") Long userId){
+        return menuService.putMenu(userId,putMenuRequest);
     }
 }
