@@ -20,12 +20,9 @@ public class MenuService {
 
     public List<MenuListResponse> getMenu(Long userId){
         List<Menu> menu = menuRepository.findByUserId(userId);
-        List<MenuListResponse> menuListResponses = new ArrayList<>(); // List 초기화 및 타입 명시
-        for (Menu value : menu) {
-            menuListResponses.add(new MenuListResponse(value));
-        }
+        List<MenuListResponse> menuListResponses = menu.stream().map(MenuListResponse::new).toList();
         if (menuListResponses.size()<=0)
-            throw new RuntimeException();
+            throw new RuntimeException("menulist가 존재하지 않습니다. userid를 확인해주세요.");
         return menuListResponses;
     }
     public void putMenu(Long userId,List<Menu> data){
