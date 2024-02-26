@@ -35,7 +35,7 @@ public class PostingController {
 //        );
     }
 
-    @DeleteMapping("/api/v1/postings/{postingId}")
+    @DeleteMapping("/api/v1/postings/{postingId}/delete")
     public void deletePosting(@PathVariable Long postingId) {
         postingService.delete(postingId);
     }
