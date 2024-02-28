@@ -16,7 +16,9 @@ public class Menu {
     private Long id;
 //    @ManyToOne
     private Long userId;
+    @NonNull
     private String name;
+    @NonNull
     private Integer price;
     @Override
     public boolean equals(Object param){
