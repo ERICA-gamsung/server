@@ -25,22 +25,22 @@ public class MenuService {
             throw new RuntimeException();
         return menuListResponses;
     }
-    public List<PutMenuRequest> putMenu(Long userId, List<Menu> data){ //userId 잘못 됐을시 에러 처리 추가할 것
+    public List<PutMenuRequest> putMenu(Long userId, List<PutMenuRequest> data){ //userId 잘못 됐을시 에러 처리 추가할 것
         List<Menu> menuList = menuRepository.findByUserId(userId);
         for(Menu x : menuList){ // 삭제 및 수정
             delOrMod(x,data,userId);
         }
-        for (Menu nowMenu : data) { //저장
-            nowMenu.setUserId(userId);
-            menuRepository.save(nowMenu);
+        for (PutMenuRequest nowMenu : data) { //저장
+            Menu newMenu = new Menu(nowMenu.id(),userId,nowMenu.name(),nowMenu.price());
+            menuRepository.save(newMenu);
         }
         return menuRepository.findByUserId(userId).stream().map(PutMenuRequest::new).toList();
     }
-    public void delOrMod(Menu menu,List<Menu> data,Long userId){ //삭제 및 수정 함수
-        for(Menu x  : data){
-            if(Objects.equals(menu.getId(), x.getId())) {
-                x.setUserId(userId);
-                menuRepository.save(x);
+    public void delOrMod(Menu menu,List<PutMenuRequest> data,Long userId){ //삭제 및 수정 함수
+        for(PutMenuRequest x  : data){
+            if(Objects.equals(menu.getId(), x.id())) {
+                Menu newMenu = new Menu(x.id(),userId,x.name(),x.price());
+                menuRepository.save(newMenu);
                 data.remove(x);
                 return;
             }
