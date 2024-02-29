@@ -2,6 +2,8 @@ package com.erica.gamsung.posting.controller;
 
 import com.erica.gamsung.posting.service.PostingDetailResponse;
 import com.erica.gamsung.posting.service.PostingService;
+import com.erica.gamsung.posting.service.PostingStateResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,11 @@ public class PostingController {
 //                LocalDateTime.now(),
 //                List.of("안녕하세요", "우리 가게로 놀러오세요", "반갑습니다")
 //        );
+    }
+
+    @GetMapping("/api/v1/postings/{postingId}/state")
+    public PostingStateResponse getPostingState(@PathVariable Long postingId) {
+        return postingService.getState(postingId);
     }
 
     @DeleteMapping("/api/v1/postings/{postingId}/delete")

@@ -22,6 +22,7 @@ public class Posting {
     private Long userId;
     private String imageUrl;
     private String fixedContent;
+    private String state; // yet, ready, done
     private LocalDateTime reservedAt;
     @Convert(converter = StringListConverter.class)
     private List<String> contents;
