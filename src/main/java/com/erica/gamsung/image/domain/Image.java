@@ -1,19 +1,18 @@
 package com.erica.gamsung.image.domain;
 
 import com.erica.gamsung.posting.domain.Posting;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
+@RequiredArgsConstructor
 public class Image {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String path;
-    @OneToOne()
-    @JoinColumn()
+    private String url;
+    @ManyToOne()
     private Posting posting;
 }

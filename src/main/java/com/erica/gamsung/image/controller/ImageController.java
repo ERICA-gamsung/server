@@ -1,8 +1,11 @@
 package com.erica.gamsung.image.controller;
 import com.erica.gamsung.image.service.ImageService;
+import com.erica.gamsung.image.service.PostImageRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 
@@ -12,11 +15,7 @@ import java.util.Objects;
 public class ImageController {
     final private ImageService imageService;
     @PostMapping(path = "post/{postingId}")
-    public String postImage(@RequestBody MultipartFile file, @PathVariable String postingId) {
-        if (!Objects.requireNonNull(file.getContentType()).startsWith("image")) {
-            return "파일 형식이 잘못됨";
-        }
-        imageService.uploadImage(file);
-        return "success";
+    public void postImage(PostImageRequest postImageRequest, @PathVariable Long postingId) {
+        imageService.uploadImage(postImageRequest,postingId);
     }
 }

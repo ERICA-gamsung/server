@@ -19,7 +19,6 @@ public class PostingService {
     public PostingDetailResponse getDetail(Long postingId) {
         Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
-
         return new PostingDetailResponse(posting.getId(), posting.getImageUrl(), posting.getFixedContent(), posting.getReservedAt(), posting.getContents());
     }
 
@@ -35,7 +34,8 @@ public class PostingService {
                 1L,
                 -1L,
                 -1L,
-                "http://example.s3.com/image1.png",
+                List.of("http://example.s3.com/image1.png"),
+//                null,
                 null,
                 LocalDateTime.of(2024, 1, 24, 17, 0, 0),
                 List.of("우리 가게로 놀러오세요!", "오늘 요리 맛있습니다!", "너만 오면 고!")
@@ -45,7 +45,8 @@ public class PostingService {
                 2L,
                 -1L,
                 -1L,
-                "http://example.s3.com/image2.png",
+                List.of("http://example.s3.com/image2.png"),
+//                null,
                 "오늘은 1000원 할인",
                 LocalDateTime.of(2024, 2, 24, 21, 0, 0),
                 List.of("오늘은 1000원 할인", "제철 고등어 드세요", "너만 오면 고!")
