@@ -25,7 +25,7 @@ import java.util.Objects;
 public class ImageService {
     private final PostingRepository postingRepository;
 
-    public void uploadImage(PostImageRequest postImageRequest,Long posingId){
+    public List<String> uploadImage(PostImageRequest postImageRequest,Long posingId){
         Posting post = postingRepository.findById(posingId).get();
         int count = 1;
         post.setImageUrl(new ArrayList<>());
@@ -63,5 +63,6 @@ public class ImageService {
                 throw new RuntimeException(e);
             }
         }
+        return postingRepository.findById(posingId).get().getImageUrl();
     }
 }

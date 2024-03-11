@@ -1,5 +1,4 @@
 package com.erica.gamsung.posting.domain;
-import com.erica.gamsung.image.domain.Image;
 import com.erica.gamsung.posting.utils.ImageUrListConverter;
 import com.erica.gamsung.posting.utils.StringListConverter;
 import jakarta.persistence.*;

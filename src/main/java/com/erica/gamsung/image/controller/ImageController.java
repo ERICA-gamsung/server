@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class ImageController {
     final private ImageService imageService;
     @PostMapping(path = "post/{postingId}")
-    public void postImage(PostImageRequest postImageRequest, @PathVariable Long postingId) {
-        imageService.uploadImage(postImageRequest,postingId);
+    public List<String> postImage(PostImageRequest postImageRequest, @PathVariable Long postingId) {
+        return imageService.uploadImage(postImageRequest,postingId);
     }
 }
