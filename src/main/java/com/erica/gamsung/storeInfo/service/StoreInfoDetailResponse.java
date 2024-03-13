@@ -21,8 +21,8 @@ public record StoreInfoDetailResponse(
         Long id,
         String name,
         String type,
-        LocalTime openTime,
-        LocalTime closeTime,
+        String openTime,
+        String closeTime,
         String openDay,
         String address,
         String phoneNumber

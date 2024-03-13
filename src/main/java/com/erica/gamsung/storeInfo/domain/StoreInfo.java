@@ -1,6 +1,7 @@
 package com.erica.gamsung.storeInfo.domain;
 
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,9 +17,9 @@ public class StoreInfo {
     private Long id;
     private String name;
     private String type;
-//    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime openTime;
-    private LocalTime closeTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private String openTime;
+    private String closeTime;
     private String openDay;
     private String address;
     private String phoneNumber;
