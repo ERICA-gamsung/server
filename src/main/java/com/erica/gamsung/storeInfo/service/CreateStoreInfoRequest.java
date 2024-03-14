@@ -9,7 +9,6 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 public class CreateStoreInfoRequest {
-    private Long id;
     private String name;
     private String type;
 
@@ -21,5 +20,4 @@ public class CreateStoreInfoRequest {
     private String openDay;
     private String address;
     private String phoneNumber;
-
 }

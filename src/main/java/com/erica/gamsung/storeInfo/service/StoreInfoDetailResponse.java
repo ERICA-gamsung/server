@@ -7,6 +7,7 @@ import lombok.Builder;
 import java.time.LocalTime;
 
 /*
+ * "id": 1,
  * "name": "감성식당",
  * "type": "음식점",
  * "openTime": "09:00",

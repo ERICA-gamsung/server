@@ -25,7 +25,7 @@ public class StoreInfoService {
 
     public CreateStoreInfoRequest createDetail(CreateStoreInfoRequest request) {
         StoreInfo storeInfo = new StoreInfo(
-                request.getId(),
+                null,
                 request.getName(),
                 request.getType(),
                 request.getOpenTime(),
