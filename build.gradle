@@ -32,7 +32,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //    testImplementation 'org.springframework.security:spring-security-test'
-    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2:2.2.224'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 //    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation "com.amazonaws:aws-java-sdk-s3:1.12.638"
