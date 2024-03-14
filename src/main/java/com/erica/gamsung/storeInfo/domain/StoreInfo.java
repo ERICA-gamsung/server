@@ -17,9 +17,12 @@ public class StoreInfo {
     private Long id;
     private String name;
     private String type;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private String openTime;
-    private String closeTime;
+
+    @JsonFormat(pattern = "HH:mm:ss")
+    private LocalTime openTime;
+    @JsonFormat(pattern = "HH:mm:ss")
+    private LocalTime closeTime;
+
     private String openDay;
     private String address;
     private String phoneNumber;

@@ -21,8 +21,10 @@ public record StoreInfoDetailResponse(
         Long id,
         String name,
         String type,
-        String openTime,
-        String closeTime,
+
+        LocalTime openTime,
+        LocalTime closeTime,
+
         String openDay,
         String address,
         String phoneNumber
@@ -40,26 +42,3 @@ public record StoreInfoDetailResponse(
                 .build();
     }
 }
-
-//@Getter
-//public class StoreInfoDetailResponse {
-//    private Long id;
-//    private String name;
-//    private String type;
-//    private String openTime;
-//    private String closeTime;
-//    private String openDay;
-//    private String address;
-//    private String phoneNumber;
-//
-//    public StoreInfoDetailResponse(Long id, String name, String type, String openTime, String closeTime, String openDay, String address, String phoneNumber) {
-//        this.id = id;
-//        this.name = name;
-//        this.type = type;
-//        this.openTime = openTime;
-//        this.closeTime = closeTime;
-//        this.openDay = openDay;
-//        this.address = address;
-//        this.phoneNumber = phoneNumber;
-//    }
-//}
