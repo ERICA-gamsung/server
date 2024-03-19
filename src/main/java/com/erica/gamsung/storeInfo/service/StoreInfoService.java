@@ -60,7 +60,7 @@ public class StoreInfoService {
         StoreInfo store1 = new StoreInfo(
                 1L,
                 "감성식당",
-                "음식점",
+                "식당",
                 LocalTime.of(9, 0, 0),
                 LocalTime.of(21, 0, 0),
                 "월화수목금",
@@ -71,7 +71,7 @@ public class StoreInfoService {
         StoreInfo store2 = new StoreInfo(
                 2L,
                 "현기식당",
-                "음식점",
+                "식당",
                 LocalTime.of(11, 0, 0),
                 LocalTime.of(22, 0, 0),
                 "월화목금",

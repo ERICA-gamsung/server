@@ -17,7 +17,7 @@ public class StoreInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String type;
+    private String type; // 식당, 카페
 
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime openTime;

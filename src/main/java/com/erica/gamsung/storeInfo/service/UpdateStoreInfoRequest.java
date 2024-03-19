@@ -1,6 +1,7 @@
 package com.erica.gamsung.storeInfo.service;
 
 import com.erica.gamsung.storeInfo.domain.StoreInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 
@@ -12,7 +13,9 @@ public record UpdateStoreInfoRequest(
         String name,
         String type,
 
+        @JsonFormat(pattern = "HH:mm:ss")
         LocalTime openTime,
+        @JsonFormat(pattern = "HH:mm:ss")
         LocalTime closeTime,
 
         String openDay,
