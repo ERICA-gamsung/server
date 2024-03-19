@@ -22,6 +22,11 @@ public class PostingService {
         return new PostingDetailResponse(posting.getId(), posting.getImageUrl(), posting.getFixedContent(), posting.getReservedAt(), posting.getContents());
     }
 
+    public DeletePosting delete(Long postingId) {
+        postingRepository.deleteById(postingId);
+        return null;
+    }
+
     @PostConstruct
     public void init() {
         // 데이터가 이미 존재하면 바로 리턴
