@@ -21,6 +21,7 @@ public class Posting {
     @Convert(converter = ImageUrListConverter.class)
     private List<String> imageUrl;
     private String fixedContent;
+    private String state; // yet, ready, done
     private LocalDateTime reservedAt;
     @Convert(converter = StringListConverter.class)
     private List<String> contents;

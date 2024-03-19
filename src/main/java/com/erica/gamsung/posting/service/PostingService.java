@@ -22,6 +22,13 @@ public class PostingService {
         return new PostingDetailResponse(posting.getId(), posting.getImageUrl(), posting.getFixedContent(), posting.getReservedAt(), posting.getContents());
     }
 
+    public PostingStateResponse getState(Long postingId) {
+        Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
+                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
+
+        return new PostingStateResponse(posting.getId(), posting.getReservedAt(), posting.getState());
+    }
+
     public DeletePosting delete(Long postingId) {
         postingRepository.deleteById(postingId);
         return null;
@@ -42,6 +49,7 @@ public class PostingService {
                 List.of("http://example.s3.com/image1.png"),
 //                null,
                 null,
+                "ready",
                 LocalDateTime.of(2024, 1, 24, 17, 0, 0),
                 List.of("우리 가게로 놀러오세요!", "오늘 요리 맛있습니다!", "너만 오면 고!")
         );
@@ -53,6 +61,7 @@ public class PostingService {
                 List.of("http://example.s3.com/image2.png"),
 //                null,
                 "오늘은 1000원 할인",
+                "yet",
                 LocalDateTime.of(2024, 2, 24, 21, 0, 0),
                 List.of("오늘은 1000원 할인", "제철 고등어 드세요", "너만 오면 고!")
         );
@@ -63,6 +72,7 @@ public class PostingService {
                 -1L,
                 null,
                 "와 정말 맛있다!",
+                "done",
                 LocalDateTime.of(2024, 3, 2, 9, 0, 0),
                 List.of("와 정말 맛있다!", "오늘 요리 맛있습니다!", "잘먹었습니다!")
         );
