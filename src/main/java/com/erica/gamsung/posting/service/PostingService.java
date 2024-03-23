@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,33 +21,40 @@ public class PostingService {
         Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
 
-        return new PostingDetailResponse(posting.getId(), posting.getImageUrl(), posting.getFixedContent(), posting.getReservedAt(), posting.getContents());
+        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents();
     }
 
     public PostingStateResponse getState(Long postingId) {
         Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
 
-        return new PostingStateResponse(posting.getId(), posting.getReservedAt(), posting.getState());
+        return new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState());
     }
 
     public DeletePosting delete(Long postingId) {
         postingRepository.deleteById(postingId);
+
         return null;
     }
 
-    public void selectOption(SelectOptionRequest request) {
-        PostingOption postingOption = new PostingOption(
+    public PostingOptionRequest postOption(PostingOptionRequest request) {
+        Posting posting = new Posting(
                 request.getReservationId(),
-                request.getReservedAt(),
+                null,
+                request.getDate(),
+                request.getTime(),
                 request.getMenu(),
                 request.getEvent(),
-                request.getComent()
+                request.getMessage(),
+                null,
+                null,
+                null,
+                "yet"
         );
 
-        postingRepository.save(postingOption);
+        postingRepository.save(posting);
 
-        return request;
+        return new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage());
     }
 
     @PostConstruct
@@ -95,7 +101,6 @@ public class PostingService {
                 "제육볶음",
                 null,
                 "신메뉴 시식해보세요",
-                "와 정말 맛있다!",
                 List.of("와 정말 맛있다!", "오늘 요리 맛있습니다!", "잘먹었습니다!"),
                 "안녕하세요! 오늘은 제육볶음이 준비되어 있습니다. 많이 오세요!",
                 "http://example.s3.com/image3.png",

@@ -3,12 +3,9 @@ package com.erica.gamsung.posting.controller;
 import com.erica.gamsung.posting.service.PostingDetailResponse;
 import com.erica.gamsung.posting.service.PostingService;
 import com.erica.gamsung.posting.service.PostingStateResponse;
-import lombok.Getter;
+import com.erica.gamsung.posting.service.PostingOptionRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController // @Controller + @ResponseBody
 @RequiredArgsConstructor    // final 붙은 멤버들에 대해서 생성자를 롬복이 만들어준다.
@@ -46,6 +43,13 @@ public class PostingController {
     public void deletePosting(@PathVariable Long postingId) {
         postingService.delete(postingId);
     }
+
+    @PostMapping("/api/v1/postings/{postingId}/option")
+    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest request, @PathVariable String postingId) {
+
+        return PostingService.postOption(request);
+    }
+
 }
 
 // 자바 객체 -> JSON (직렬화)

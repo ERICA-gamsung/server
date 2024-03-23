@@ -1,23 +1,40 @@
 package com.erica.gamsung.posting.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.erica.gamsung.posting.utils.StringListConverter;
+import jakarta.persistence.Convert;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class DeletePosting {
-    private Long id;
-    private String imageUrl;
-    private String fixedContent;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime reservedAt;
+    private Long reservationId;
+    private LocalDate date;
+    private LocalTime time;
+
+    private String menu;
+    private String event;
+    private String message;
+
+    @Convert(converter = StringListConverter.class)
     private List<String> contents;
 
-    public DeletePosting(Long id, String imageUrl, String fixedContent, LocalDateTime reservedAt, List<String> contents) {
-        this.id = id;
-        this.imageUrl = imageUrl;
-        this.fixedContent = fixedContent;
-        this.reservedAt = reservedAt;
+    private String fixedContent;
+
+    private String imageUrl;
+
+    private String state;
+
+    public DeletePosting(Long reservationId, LocalDate date, LocalTime time, String menu, String event, String message, List<String> contents, String fixedContent, String imageUrl, String state) {
+        this.reservationId = reservationId;
+        this.date = date;
+        this.time = time;
+        this.menu = menu;
+        this.event = event;
+        this.message = message;
         this.contents = contents;
+        this.fixedContent = fixedContent;
+        this.imageUrl = imageUrl;
+        this.state = state;
     }
 }
