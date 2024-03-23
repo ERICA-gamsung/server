@@ -37,7 +37,7 @@ public class PostingService {
         return null;
     }
 
-    public PostingOptionRequest postOption(PostingOptionRequest request) {
+    public static PostingOptionRequest postOption(PostingOptionRequest request) {
         Posting posting = new Posting(
                 request.getReservationId(),
                 null,
