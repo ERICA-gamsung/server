@@ -21,7 +21,7 @@ public class PostingService {
         Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
 
-        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents();
+        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents());
     }
 
     public PostingStateResponse getState(Long postingId) {
@@ -37,7 +37,7 @@ public class PostingService {
         return null;
     }
 
-    public static PostingOptionRequest postOption(PostingOptionRequest request) {
+    public PostingOptionRequest postOption(PostingOptionRequest request) {
         Posting posting = new Posting(
                 request.getReservationId(),
                 null,

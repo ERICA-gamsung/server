@@ -23,31 +23,27 @@ public class PostingController {
 //    }
 
     @GetMapping("/api/v1/postings/{postingId}")
-    public PostingDetailResponse getPostingDetail(@PathVariable Long postingId) {
-        return postingService.getDetail(postingId);
-//        return new PostingDetailResponse(
-//                posting_id,
-//                "http://example.s3.com/image1.jpg",
-//                null,
-//                LocalDateTime.now(),
-//                List.of("안녕하세요", "우리 가게로 놀러오세요", "반갑습니다")
-//        );
+    public PostingDetailResponse getPostingDetail(@PathVariable Long reservationId) {
+
+        return postingService.getDetail(reservationId);
     }
 
     @GetMapping("/api/v1/postings/{postingId}/state")
-    public PostingStateResponse getPostingState(@PathVariable Long postingId) {
-        return postingService.getState(postingId);
+    public PostingStateResponse getPostingState(@PathVariable Long reservationId) {
+
+        return postingService.getState(reservationId);
     }
 
     @DeleteMapping("/api/v1/postings/{postingId}/delete")
-    public void deletePosting(@PathVariable Long postingId) {
-        postingService.delete(postingId);
+    public void deletePosting(@PathVariable Long reservationId) {
+
+        postingService.delete(reservationId);
     }
 
     @PostMapping("/api/v1/postings/{postingId}/option")
     public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest request, @PathVariable String postingId) {
 
-        return PostingService.postOption(request);
+        return postingService.postOption(request);
     }
 
 }
