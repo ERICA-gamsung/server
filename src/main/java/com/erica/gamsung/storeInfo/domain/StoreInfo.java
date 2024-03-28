@@ -16,7 +16,7 @@ public class StoreInfo {
     private Long id;
     private String name;
     private String type;
-//    @DateTimeFormat(pattern = "HH:mm")
+
     private LocalTime openTime;
     private LocalTime closeTime;
     private String openDay;

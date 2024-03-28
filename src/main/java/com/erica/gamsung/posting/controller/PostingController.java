@@ -22,26 +22,26 @@ public class PostingController {
 //        this.postingService = postingService;
 //    }
 
-    @GetMapping("/api/v1/postings/{postingId}")
+    @GetMapping("/api/v1/postings/{reservationId}")
     public PostingDetailResponse getPostingDetail(@PathVariable Long reservationId) {
 
         return postingService.getDetail(reservationId);
     }
 
-    @GetMapping("/api/v1/postings/{postingId}/state")
+    @GetMapping("/api/v1/postings/{reservationId}/state")
     public PostingStateResponse getPostingState(@PathVariable Long reservationId) {
 
         return postingService.getState(reservationId);
     }
 
-    @DeleteMapping("/api/v1/postings/{postingId}/delete")
+    @DeleteMapping("/api/v1/postings/{reservationId}/delete")
     public void deletePosting(@PathVariable Long reservationId) {
 
         postingService.delete(reservationId);
     }
 
-    @PostMapping("/api/v1/postings/{postingId}/option")
-    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest request, @PathVariable String postingId) {
+    @PostMapping("/api/v1/postings/{reservationId}/option")
+    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest request, @PathVariable Long reservationId) {
 
         return postingService.postOption(request);
     }

@@ -6,6 +6,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +23,8 @@ public class MenuService {
         for (Menu value : menu) {
             menuListResponses.add(new MenuListResponse(value));
         }
-        if (menuListResponses.size()<=0)
-            throw new RuntimeException();
+//        if (menuListResponses.size()<=0)
+//            throw new RuntimeException();
         return menuListResponses;
     }
     public List<PutMenuRequest> putMenu(Long userId, List<PutMenuRequest> data){ //userId 잘못 됐을시 에러 처리 추가할 것

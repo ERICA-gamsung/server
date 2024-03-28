@@ -17,16 +17,16 @@ public class PostingService {
     @Autowired
     private PostingRepository postingRepository;
 
-    public PostingDetailResponse getDetail(Long postingId) {
-        Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
-                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
+    public PostingDetailResponse getDetail(Long reservationId) {
+        Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
+                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
         return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents());
     }
 
-    public PostingStateResponse getState(Long postingId) {
-        Posting posting = postingRepository.findById(postingId).orElseThrow(() ->
-                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + postingId));
+    public PostingStateResponse getState(Long reservationId) {
+        Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
+                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
         return new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState());
     }
@@ -40,15 +40,15 @@ public class PostingService {
     public PostingOptionRequest postOption(PostingOptionRequest request) {
         Posting posting = new Posting(
                 request.getReservationId(),
-                null,
+                1L,
                 request.getDate(),
                 request.getTime(),
                 request.getMenu(),
                 request.getEvent(),
                 request.getMessage(),
-                null,
-                null,
-                null,
+                List.of("후보1", "후보2", "후보3"),
+                "최종",
+                "www.example.com/image.png",
                 "yet"
         );
 

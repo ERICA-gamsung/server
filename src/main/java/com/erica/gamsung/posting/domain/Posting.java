@@ -16,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
     private Long userId;
 
