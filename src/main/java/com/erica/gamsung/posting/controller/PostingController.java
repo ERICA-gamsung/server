@@ -7,6 +7,8 @@ import com.erica.gamsung.posting.service.PostingOptionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController // @Controller + @ResponseBody
 @RequiredArgsConstructor    // final 붙은 멤버들에 대해서 생성자를 롬복이 만들어준다.
 public class PostingController {
@@ -40,10 +42,16 @@ public class PostingController {
         postingService.delete(reservationId);
     }
 
-    @PostMapping("/api/v1/postings/{reservationId}/option")
-    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest request, @PathVariable Long reservationId) {
+//    @PostMapping("/api/v1/postings/{reservationId}/option")
+//    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest requests, @PathVariable Long reservationId) {
+//
+//        return postingService.postOption(requests);
+//    }
 
-        return postingService.postOption(request);
+    @PostMapping("/api/v1/postings/option")
+    public List<PostingOptionRequest> PostingOption(@RequestBody List<PostingOptionRequest> requests) {
+
+        return postingService.postOption(requests);
     }
 
 }

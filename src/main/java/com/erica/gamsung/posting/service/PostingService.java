@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 //@Component
@@ -37,8 +38,11 @@ public class PostingService {
         return null;
     }
 
-    public PostingOptionRequest postOption(PostingOptionRequest request) {
-        Posting posting = new Posting(
+    public List<PostingOptionRequest> postOption(List<PostingOptionRequest> requests) {
+        List<PostingOptionRequest> requestList = new ArrayList<>();
+
+        for (PostingOptionRequest request : requests) {
+            Posting posting = new Posting(
                 request.getReservationId(),
                 1L,
                 request.getDate(),
@@ -50,12 +54,35 @@ public class PostingService {
                 "최종",
                 "www.example.com/image.png",
                 "yet"
-        );
+            );
 
-        postingRepository.save(posting);
+            postingRepository.save(posting);
 
-        return new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage());
+            requestList.add(new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
+        }
+
+        return requestList;
     }
+
+//    public PostingOptionRequest postOption(PostingOptionRequest request) {
+//        Posting posting = new Posting(
+//                request.getReservationId(),
+//                1L,
+//                request.getDate(),
+//                request.getTime(),
+//                request.getMenu(),
+//                request.getEvent(),
+//                request.getMessage(),
+//                List.of("후보1", "후보2", "후보3"),
+//                "최종",
+//                "www.example.com/image.png",
+//                "yet"
+//        );
+//
+//        postingRepository.save(posting);
+//
+//        return new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage());
+//    }
 
     @PostConstruct
     public void init() {
@@ -110,5 +137,4 @@ public class PostingService {
         // 더미 데이터 저장
         postingRepository.saveAll(List.of(posting1, posting2, posting3));
     }
-
 }

@@ -10,8 +10,8 @@ import java.time.LocalTime;
 
 @Getter
 public class PostingOptionRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
     private LocalDate date;
