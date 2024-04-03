@@ -16,10 +16,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
+    private Long userId;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-    private Long userId;
 
     private LocalDate date;
     private LocalTime time;

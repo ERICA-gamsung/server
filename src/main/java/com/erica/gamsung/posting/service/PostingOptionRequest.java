@@ -1,8 +1,5 @@
 package com.erica.gamsung.posting.service;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -10,8 +7,6 @@ import java.time.LocalTime;
 
 @Getter
 public class PostingOptionRequest {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
     private LocalDate date;
