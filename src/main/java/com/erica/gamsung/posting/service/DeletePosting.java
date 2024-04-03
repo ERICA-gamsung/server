@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class DeletePosting {
+    private Long userId;
     private Long reservationId;
     private LocalDate date;
     private LocalTime time;
@@ -25,7 +26,8 @@ public class DeletePosting {
 
     private String state;
 
-    public DeletePosting(Long reservationId, LocalDate date, LocalTime time, String menu, String event, String message, List<String> contents, String fixedContent, String imageUrl, String state) {
+    public DeletePosting(Long userId, Long reservationId, LocalDate date, LocalTime time, String menu, String event, String message, List<String> contents, String fixedContent, String imageUrl, String state) {
+        this.userId = userId;
         this.reservationId = reservationId;
         this.date = date;
         this.time = time;
