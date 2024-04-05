@@ -1,5 +1,6 @@
 package com.erica.gamsung.storeInfo.controller;
 
+import com.erica.gamsung.storeInfo.service.CreateStoreInfoRequest;
 import com.erica.gamsung.storeInfo.service.StoreInfoDetailResponse;
 import com.erica.gamsung.storeInfo.service.StoreInfoService;
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
@@ -17,6 +18,12 @@ public class StoreInfoController {
     public StoreInfoDetailResponse getStoreInfoDetail(@PathVariable Long storeInfoId) {
 
         return storeInfoService.getDetail(storeInfoId);
+    }
+
+    @PostMapping("/api/v1/storeInfos/post")
+    public CreateStoreInfoRequest createStoreInfoDetail(@RequestBody CreateStoreInfoRequest request) {
+
+        return storeInfoService.createDetail(request);
     }
 
     @PutMapping("/api/v1/storeInfos/{storeInfoId}")

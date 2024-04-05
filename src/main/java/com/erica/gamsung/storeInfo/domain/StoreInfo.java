@@ -1,6 +1,8 @@
 package com.erica.gamsung.storeInfo.domain;
 
+import com.erica.gamsung.storeInfo.service.CreateStoreInfoRequest;
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,10 +17,13 @@ public class StoreInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String type;
+    private String type; // 식당, 카페
 
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime openTime;
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime closeTime;
+
     private String openDay;
     private String address;
     private String phoneNumber;

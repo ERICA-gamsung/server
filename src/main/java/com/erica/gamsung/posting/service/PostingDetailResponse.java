@@ -1,6 +1,8 @@
 package com.erica.gamsung.posting.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 
 import java.time.LocalDate;

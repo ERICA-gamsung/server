@@ -1,14 +1,16 @@
 package com.erica.gamsung.storeInfo.service;
 
 import com.erica.gamsung.storeInfo.domain.StoreInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 
 import java.time.LocalTime;
 
 /*
+ * "id": 1,
  * "name": "감성식당",
- * "type": "음식점",
+ * "type": "식당",
  * "openTime": "09:00",
  * "closeTime": "21:00",
  * "openDay": "월화수목금",
@@ -21,8 +23,12 @@ public record StoreInfoDetailResponse(
         Long id,
         String name,
         String type,
+
+        @JsonFormat(pattern = "HH:mm:ss")
         LocalTime openTime,
+        @JsonFormat(pattern = "HH:mm:ss")
         LocalTime closeTime,
+
         String openDay,
         String address,
         String phoneNumber
@@ -40,26 +46,3 @@ public record StoreInfoDetailResponse(
                 .build();
     }
 }
-
-//@Getter
-//public class StoreInfoDetailResponse {
-//    private Long id;
-//    private String name;
-//    private String type;
-//    private String openTime;
-//    private String closeTime;
-//    private String openDay;
-//    private String address;
-//    private String phoneNumber;
-//
-//    public StoreInfoDetailResponse(Long id, String name, String type, String openTime, String closeTime, String openDay, String address, String phoneNumber) {
-//        this.id = id;
-//        this.name = name;
-//        this.type = type;
-//        this.openTime = openTime;
-//        this.closeTime = closeTime;
-//        this.openDay = openDay;
-//        this.address = address;
-//        this.phoneNumber = phoneNumber;
-//    }
-//}
