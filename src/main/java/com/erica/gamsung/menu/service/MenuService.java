@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -17,9 +18,11 @@ public class MenuService {
 
     public List<MenuListResponse> getMenu(Long userId){
         List<Menu> menu = menuRepository.findByUserId(userId);
+
         List<MenuListResponse> menuListResponses = menu.stream().map(MenuListResponse::new).toList();
         if (menuListResponses.size()<=0)
             throw new RuntimeException("menulist가 존재하지 않습니다. userid를 확인해주세요.");
+
         return menuListResponses;
     }
     public List<PutMenuRequest> putMenu(Long userId, List<PutMenuRequest> data){ //userId 잘못 됐을시 에러 처리 추가할 것
