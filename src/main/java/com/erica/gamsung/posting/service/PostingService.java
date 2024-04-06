@@ -22,7 +22,7 @@ public class PostingService {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
-        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents());
+        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl().toString(), posting.getFixedContent(), posting.getContents());
     }
 
     public PostingStateResponse getState(Long reservationId) {
@@ -50,9 +50,9 @@ public class PostingService {
                 request.getMenu(),
                 request.getEvent(),
                 request.getMessage(),
-                List.of("후보1", "후보2", "후보3"),
-                "최종",
-                "www.example.com/image.png",
+                List.of(null, null, null),
+                null,
+                null,
                 "yet"
             );
 
@@ -102,7 +102,7 @@ public class PostingService {
                 null,
                 List.of("우리 가게로 놀러오세요!", "오늘 요리 맛있습니다!", "너만 오면 고!"),
                 "안녕하세요! 오늘은 김치찌개가 준비되어 있습니다. 많이 오세요!",
-                "http://example.s3.com/image1.png",
+                List.of("http://example.s3.com/image1.png"),
                 "ready"
         );
 
@@ -116,7 +116,7 @@ public class PostingService {
                 "새학기 힘내세요!",
                 List.of("오늘은 1000원 할인", "라멘 드세요", "너만 오면 고!"),
                 "안녕하세요! 오늘은 돈코츠 라멘이 준비되어 있습니다. 많이 오세요!",
-                "http://example.s3.com/image2.png",
+                List.of("http://example.s3.com/image2.png"),
                 "yet"
                 );
 
@@ -130,7 +130,7 @@ public class PostingService {
                 "신메뉴 시식해보세요",
                 List.of("와 정말 맛있다!", "오늘 요리 맛있습니다!", "잘먹었습니다!"),
                 "안녕하세요! 오늘은 제육볶음이 준비되어 있습니다. 많이 오세요!",
-                "http://example.s3.com/image3.png",
+                List.of("http://example.s3.com/image3.png"),
                 "done"
                 );
 

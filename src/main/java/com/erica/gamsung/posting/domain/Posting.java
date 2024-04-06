@@ -1,8 +1,12 @@
 package com.erica.gamsung.posting.domain;
+
 import com.erica.gamsung.posting.utils.ImageUrListConverter;
 import com.erica.gamsung.posting.utils.StringListConverter;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
@@ -31,7 +34,19 @@ public class Posting {
 
     private String fixedContent;
 
-    private String imageUrl;
+    @Convert(converter = ImageUrListConverter.class)
+    private List<String> imageUrl;
 
-    private String state; // yet, ready, done
+    /*
+     * yet : 글 3개가 발행조차 되지 않은 상태
+     * not_fix : 글 3개 중 1개 , 이미지 확정되지 않은 상태
+     * ready : 인스타그램에 올라갈 수 있는 상태
+     * done : 실제로 인스타그램에 올라간 상태
+     */
+
+    private String state; // yet, not_fix, ready, done
+
+    public void setImageUrl(List<String> objects) {
+        this.imageUrl = objects;
+    }
 }
