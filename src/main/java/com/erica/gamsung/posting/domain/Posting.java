@@ -46,7 +46,7 @@ public class Posting {
 
     private String state; // yet, not_fix, ready, done
 
-    public void setImageUrl(List<String> objects) {
-        this.imageUrl = objects;
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
