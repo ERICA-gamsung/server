@@ -3,10 +3,7 @@ package com.erica.gamsung.posting.domain;
 import com.erica.gamsung.posting.utils.ImageUrListConverter;
 import com.erica.gamsung.posting.utils.StringListConverter;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +31,7 @@ public class Posting {
 
     private String fixedContent;
 
+    @Setter
     @Convert(converter = ImageUrListConverter.class)
     private List<String> imageUrl;
 
@@ -46,7 +44,5 @@ public class Posting {
 
     private String state; // yet, not_fix, ready, done
 
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
+
