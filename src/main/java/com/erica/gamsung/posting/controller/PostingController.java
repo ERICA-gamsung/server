@@ -53,7 +53,6 @@ public class PostingController {
 
         return postingService.postOption(requests);
     }
-
 }
 
 // 자바 객체 -> JSON (직렬화)

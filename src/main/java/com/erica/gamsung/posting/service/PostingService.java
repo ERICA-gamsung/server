@@ -53,9 +53,9 @@ public class PostingService {
                     request.getMenu(),
                     request.getEvent(),
                     request.getMessage(),
-                    List.of(null, null, null),
-                    null,
-                    List.of(null),
+                    List.of("", "", ""),
+                    "",
+                    List.of(""),
                     "yet"
             );
 
@@ -77,7 +77,7 @@ public class PostingService {
         // 더미 데이터 작성
         Posting posting1 = new Posting(
                 1L,
-                5L,
+                1L,
                 LocalDate.of(2024, 1, 24),
                 LocalTime.of(17, 0),
                 "김치찌개",
@@ -90,8 +90,8 @@ public class PostingService {
         );
 
         Posting posting2 = new Posting(
+                1L,
                 2L,
-                61L,
                 LocalDate.of(2024, 3, 4),
                 LocalTime.of(9, 0),
                 "돈코츠 라멘",
@@ -104,8 +104,8 @@ public class PostingService {
         );
 
         Posting posting3 = new Posting(
+                1L,
                 3L,
-                24L,
                 LocalDate.of(2024, 4, 2),
                 LocalTime.of(12, 30),
                 "제육볶음",
