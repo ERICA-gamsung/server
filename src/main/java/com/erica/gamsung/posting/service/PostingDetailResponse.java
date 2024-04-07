@@ -5,8 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /*
@@ -23,22 +22,18 @@ import java.util.List;
 
 @Getter
 public class PostingDetailResponse {
-    private Long reservationId;
-
-    private LocalDate date;
-    private LocalTime time;
-
-    private String imageUrl;
+    private Long id;
+    private List<String> imageUrl;
     private String fixedContent;
-
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime reservedAt;
     private List<String> contents;
 
-    public PostingDetailResponse(Long reservationId, LocalDate date, LocalTime time, String imageUrl, String fixedContent, List<String> contents) {
-        this.reservationId = reservationId;
-        this.date = date;
-        this.time = time;
+    public PostingDetailResponse(Long id, List<String> imageUrl, String fixedContent, LocalDateTime reservedAt, List<String> contents) {
+        this.id = id;
         this.imageUrl = imageUrl;
         this.fixedContent = fixedContent;
+        this.reservedAt = reservedAt;
         this.contents = contents;
     }
 }

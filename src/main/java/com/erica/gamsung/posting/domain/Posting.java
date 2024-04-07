@@ -4,8 +4,7 @@ import com.erica.gamsung.posting.utils.StringListConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -14,24 +13,16 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
-    private Long userId;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Long reservationId;
-
-    private LocalDate date;
-    private LocalTime time;
-
-    private String menu;
-    private String event;
-    private String message;
-
+    private Long userId;
+    @Convert(converter = ImageUrListConverter.class)
+    private List<String> imageUrl;
+    private String fixedContent;
+    private String state; // yet, ready, done
+    private LocalDateTime reservedAt;
     @Convert(converter = StringListConverter.class)
     private List<String> contents;
-
-    private String fixedContent;
-
-    private String imageUrl;
-
-    private String state; // yet, ready, done
 }
