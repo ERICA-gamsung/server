@@ -21,10 +21,10 @@ public class Posting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    @JsonFormat(pattern = "HH:mm:ss")
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime time;
 
