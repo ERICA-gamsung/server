@@ -49,7 +49,7 @@ public class PostingService {
 
         postingRepository.delete(posting);
 
-        return new DeletePosting(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage(), posting.getContents(), posting.getFixedContent(), posting.getImageUrl(), posting.getState());
+        return null;
     }
 
     public List<PostingOptionRequest> postOption(List<PostingOptionRequest> requests) {

@@ -36,8 +36,8 @@ public class PostingController {
         return postingService.getState(reservationId);
     }
 
-    @GetMapping("/api/v1/{userId}/postings/state")
-    public List<PostingStateResponse> getPostingStateList(@PathVariable Long userId) {
+    @GetMapping("/api/v1/postings/state")
+    public List<PostingStateResponse> getPostingStateList() {
 
         return postingService.getStateList();
     }
