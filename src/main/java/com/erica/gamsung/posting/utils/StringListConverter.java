@@ -9,7 +9,7 @@ import java.util.List;
 @Converter
 public class StringListConverter implements AttributeConverter<List<String>, String> {
 
-    private static final String SPLIT_CHAR = " / ";
+    private static final String SPLIT_CHAR = " | ";
 
     /**
      * Java
