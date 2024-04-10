@@ -15,7 +15,7 @@ public class GptResponse {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class Choice {
+    public static class Choice {
         // gpt 대화 인덱스 번호
         private int index;
 
