@@ -36,6 +36,12 @@ public class PostingController {
         return postingService.getState(reservationId);
     }
 
+    @GetMapping("/api/v1/{userId}/postings/state")
+    public List<PostingStateResponse> getPostingStateList(@PathVariable Long userId) {
+
+        return postingService.getStateList();
+    }
+
     @DeleteMapping("/api/v1/postings/{reservationId}/delete")
     public void deletePosting(@PathVariable Long reservationId) {
 
