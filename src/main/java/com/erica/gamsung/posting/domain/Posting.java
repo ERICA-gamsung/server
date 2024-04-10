@@ -21,7 +21,6 @@ public class Posting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
-    @JsonFormat(pattern = "HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     @JsonFormat(pattern = "HH:mm:ss")
