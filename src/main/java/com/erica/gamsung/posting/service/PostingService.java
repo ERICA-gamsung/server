@@ -66,7 +66,17 @@ public class PostingService {
 
         return requestList;
     }
-
+    public void postPosting(PostPostingRequest posting,Long postingId){
+        Posting post = postingRepository.findById(postingId).get();
+        post.setFixedContent(posting.content());
+        if(!(post.getImageUrl()==null)){
+            post.setState("ready");
+        }
+        else{
+            post.setState("not_fix");
+        }
+        postingRepository.save(post);
+    }
     @PostConstruct
     public void init() {
         // 데이터가 이미 존재하면 바로 리턴
