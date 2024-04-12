@@ -1,9 +1,5 @@
 package com.erica.gamsung.posting.service;
 
-import com.erica.gamsung.posting.utils.ImageUrListConverter;
-import com.erica.gamsung.posting.utils.StringListConverter;
-import jakarta.persistence.Convert;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,11 +14,9 @@ public class DeletePosting {
     private String event;
     private String message;
 
-    @Convert(converter = StringListConverter.class)
     private List<String> contents;
     private String fixedContent;
 
-    @Convert(converter = ImageUrListConverter.class)
     private List<String> imageUrl;
 
     private String state;
