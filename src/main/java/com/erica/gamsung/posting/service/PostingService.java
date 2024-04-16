@@ -4,12 +4,16 @@ import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 //@Component
 @Service
@@ -67,9 +71,20 @@ public class PostingService {
         return requestList;
     }
     public void postPosting(PostPostingRequest posting,Long postingId){
-        Posting post = postingRepository.findById(postingId).get();
+        Optional<Posting> optionalPost = postingRepository.findById(postingId);
+        final Posting post;
+        if(optionalPost.isPresent()){
+            post = optionalPost.get();
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"해당 ID의 포스트는 존재하지 않습니다.");
+        }
+
         post.setFixedContent(posting.content());
-        if(!(post.getImageUrl()==null)){
+        if(Objects.equals(post.getState(), "ready")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"해당 포스트는 이미 발행 준비 중으로 변경이 불가합니다.");
+        }
+        else if(!(post.getImageUrl()==null)){
             post.setState("ready");
         }
         else{
@@ -108,9 +123,9 @@ public class PostingService {
                 "4명당 음료수 1개 무료",
                 "새학기 힘내세요!",
                 List.of("오늘은 1000원 할인", "라멘 드세요", "너만 오면 고!"),
-                "안녕하세요! 오늘은 돈코츠 라멘이 준비되어 있습니다. 많이 오세요!",
+                null,
                 List.of("http://example.s3.com/image2.png"),
-                "yet"
+                "not_fix"
         );
 
         Posting posting3 = new Posting(
