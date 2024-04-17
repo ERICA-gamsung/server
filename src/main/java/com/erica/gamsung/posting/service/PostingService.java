@@ -1,6 +1,5 @@
 package com.erica.gamsung.posting.service;
 
-import com.erica.gamsung.gpt.service.GptService;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
@@ -22,9 +21,6 @@ public class PostingService {
 
     @Autowired
     private PostingRepository postingRepository;
-
-    @Autowired
-    private GptService gptService;
 
     public PostingDetailResponse getDetail(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
@@ -60,15 +56,6 @@ public class PostingService {
         return new DeletePosting(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage(), posting.getPrompt(), posting.getContents(), posting.getFixedContent(), posting.getImageUrl(), posting.getState());
     }
 
-    public void getContents(Long reservationId) {
-        Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
-                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
-
-        posting.setState("not_fix");
-
-        postingRepository.save(posting);
-    }
-
     public List<PostingOptionRequest> postOption(List<PostingOptionRequest> requests) {
         List<PostingOptionRequest> requestList = new ArrayList<>();
 
@@ -77,12 +64,12 @@ public class PostingService {
             String event = request.getEvent();
             String message = request.getMessage();
 
-            String prompt = String.format("나는 음식점을 운영하고 있어. 내 음식점을 홍보하기 위한 홍보 문구를 작성해. 홍보 문구는 홍보할 메뉴, 이벤트, 고객에게 전달하고 싶은 메시지 등을 고려해서 3가지 버전으로 작성하는데 \"@\" 기호를 구분자로 각 버전 사이에 사용하고 줄 바꿈 문자는 사용하면 안돼.\n" +
-                    "홍보할 메뉴 :  %s\n" +
-                    "이벤트 : %s\n" +
-                    "고객에게 전달하고 싶은 메시지 : %s\n", menu, event, message);
-
-            List<String> contents = gptService.contents(prompt);
+            String prompt = String.format("""
+                    나는 음식점을 운영하고 있어. 내 음식점을 홍보하기 위한 홍보 문구를 작성해. 홍보 문구는 홍보할 메뉴, 이벤트, 고객에게 전달하고 싶은 메시지 등을 고려해서 3가지 버전으로 작성하는데 "@" 기호를 구분자로 각 버전 사이에 사용하고 줄 바꿈 문자는 사용하면 안돼.
+                    홍보할 메뉴 :  %s
+                    이벤트 : %s
+                    고객에게 전달하고 싶은 메시지 : %s
+                    """, menu, event, message);
 
             Posting posting = new Posting(
                     1L,
@@ -93,7 +80,7 @@ public class PostingService {
                     event,
                     message,
                     prompt,
-                    contents,
+                    List.of(""),
                     "",
                     List.of(""),
                     "yet"
