@@ -7,6 +7,7 @@ import com.erica.gamsung.gpt.dto.GptRequest;
 import com.erica.gamsung.gpt.dto.GptResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,11 +39,24 @@ public class GptService {
         GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
 
         String ans = response.getChoices().get(0).getMessage().getContent();
-        List<String> contents = stringListConverter.convertToEntityAttribute(ans);
 
-        posting.setContents(contents);
+        return stringListConverter.convertToEntityAttribute(ans);
+    }
 
-        postingRepository.save(posting);
-        return contents;
+    @Scheduled(fixedRate = 60000) // 1분마다 실행
+    public void updateContents() {
+        List<Posting> postings = postingRepository.findAll();
+
+        for (Posting posting : postings) {
+            String prompt = posting.getPrompt();
+
+            if (prompt != null && !prompt.isEmpty() && (posting.getContents() == null || posting.getContents().isEmpty())) {
+                List<String> contents = getContents(posting.getReservationId());
+
+                posting.setContents(contents);
+
+                postingRepository.save(posting);
+            }
+        }
     }
 }
