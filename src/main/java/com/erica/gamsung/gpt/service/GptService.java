@@ -38,11 +38,7 @@ public class GptService {
         GptRequest request = new GptRequest(model, prompt);
         GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
 
-        String ans = null;
-
-        if (response != null) {
-            ans = response.getChoices().get(0).getMessage().getContent();
-        }
+        String ans = response.getChoices().get(0).getMessage().getContent();
 
         return stringListConverter.convertToEntityAttribute(ans);
     }
