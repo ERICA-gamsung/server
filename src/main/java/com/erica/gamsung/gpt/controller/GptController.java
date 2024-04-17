@@ -1,29 +1,17 @@
 package com.erica.gamsung.gpt.controller;
 
-import com.erica.gamsung.gpt.dto.GptRequest;
-import com.erica.gamsung.gpt.dto.GptResponse;
+import com.erica.gamsung.gpt.service.GptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/gpt")
+@RequestMapping("/api/v1/gpt")
 public class GptController {
-    @Value("${openai.model}")
-    private String model;
-
-    @Value("${openai.api.url}")
-    private String apiUrl;
-
     @Autowired
-    private RestTemplate restTemplate;
+    private GptService gptService;
 
-    @GetMapping("/chat")
-    public String chat(@RequestParam("prompt") String prompt) {
-        GptRequest request = new GptRequest(model, prompt);
-        GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
-
-        return response.getChoices().get(0).getMessage().getContent();
+    @GetMapping("/get/{reservationId}/content")
+    public String getContents(@PathVariable Long reservationId, @RequestParam("prompt") String prompt) {
+        return gptService.getContents(prompt).toString();
     }
 }
