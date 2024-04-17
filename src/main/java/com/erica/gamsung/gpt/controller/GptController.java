@@ -11,7 +11,7 @@ public class GptController {
     private GptService gptService;
 
     @GetMapping("/get/{reservationId}/content")
-    public String getContents(@PathVariable Long reservationId, @RequestParam("prompt") String prompt) {
-        return gptService.getContents(prompt).toString();
+    public String getContents(@PathVariable Long reservationId) {
+        return gptService.getContents(reservationId).toString();
     }
 }
