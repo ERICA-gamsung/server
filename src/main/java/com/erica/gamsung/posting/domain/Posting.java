@@ -31,7 +31,6 @@ public class Posting {
     private String event;
     private String message;
 
-    private String prompt;
     @Convert(converter = StringListConverter.class)
     private List<String> contents;
     private String fixedContent;
