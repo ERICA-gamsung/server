@@ -13,6 +13,7 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto:update
+
   cloud:
     aws:
       credentials:
@@ -25,3 +26,4 @@ spring:
 springdoc:
   swagger-ui:
     path: /api-test
+
