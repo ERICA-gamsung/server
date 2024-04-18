@@ -25,8 +25,8 @@ import java.util.Objects;
 public class ImageService {
     private final PostingRepository postingRepository;
 
-    public List<String> uploadImage(PostImageRequest postImageRequest,Long posingId){
-        Posting post = postingRepository.findById(posingId).get();
+    public List<String> uploadImage(PostImageRequest postImageRequest,Long reservationId){
+        Posting post = postingRepository.findById(reservationId).get();
         int count = 1;
         post.setImageUrl(new ArrayList<>());
         for(MultipartFile file : postImageRequest.files()){
@@ -45,7 +45,7 @@ public class ImageService {
             String bucketName = "gamsung-bucket";
             try {
                 String fileName = "";
-                fileName = posingId+"_"+count+type;
+                fileName = reservationId+"_"+count+type;
                 count++;
                 ObjectMetadata metadata = new ObjectMetadata();
                 metadata.setContentLength(file.getSize());
@@ -63,6 +63,6 @@ public class ImageService {
                 throw new RuntimeException(e);
             }
         }
-        return postingRepository.findById(posingId).get().getImageUrl();
+        return postingRepository.findById(reservationId).get().getImageUrl();
     }
 }

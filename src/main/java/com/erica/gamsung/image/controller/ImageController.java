@@ -12,8 +12,8 @@ import java.util.List;
 @RequestMapping("api/v1/image")
 public class ImageController {
     final private ImageService imageService;
-    @PostMapping(path = "post/{postingId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> postImage(@ModelAttribute PostImageRequest postImageRequest, @PathVariable Long postingId) {
-        return imageService.uploadImage(postImageRequest,postingId);
+    @PostMapping(path = "post/{reservationId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> postImage(@ModelAttribute PostImageRequest postImageRequest, @PathVariable Long reservationId) {
+        return imageService.uploadImage(postImageRequest,reservationId);
     }
 }
