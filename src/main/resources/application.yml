@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    aws:
+      credentials:
+        profile-name: default
+      region:
+        static: AP_NORTHEAST_2
+      stack:
+        auto: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:test
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    open-in-view: false
+
+  config:
+    activate:
+      on-profile: s3
+
+springdoc:
+  swagger-ui:
+    path: /api-test
