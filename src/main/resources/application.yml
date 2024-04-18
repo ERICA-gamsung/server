@@ -1,12 +1,4 @@
 spring:
-  cloud:
-    aws:
-      credentials:
-        profile-name: default
-      region:
-        static: AP_NORTHEAST_2
-      stack:
-        auto: false
   datasource:
     driver-class-name: org.h2.Driver
     username: sa
@@ -20,9 +12,14 @@ spring:
   jpa:
     open-in-view: false
 
-  config:
-    activate:
-      on-profile: s3
+  cloud:
+    aws:
+      credentials:
+        profile-name: default
+      region:
+        static: AP_NORTHEAST_2
+      stack:
+        auto: false
 
 springdoc:
   swagger-ui:
