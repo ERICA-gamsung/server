@@ -29,7 +29,7 @@ public class GptService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private GptRequest getGptRequest(Posting posting) {
+    private String getPrompt(Posting posting) {
         String menu = posting.getMenu();
         String event = posting.getEvent();
         String message = posting.getMessage();
@@ -41,17 +41,16 @@ public class GptService {
                     고객에게 전달하고 싶은 메시지 : %s
                     """, menu, event, message);
 
-        GptRequest request = new GptRequest(model, prompt);
-
-        return request;
+        return prompt;
     }
 
     public List<String> getContents(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
+        String prompt = getPrompt(posting);
 
-        GptRequest request = getGptRequest(posting);
+        GptRequest request = new GptRequest(model, prompt);
         GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
 
         String ans = response.getChoices().get(0).getMessage().getContent();
