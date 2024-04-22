@@ -7,7 +7,6 @@ import com.erica.gamsung.gpt.dto.GptRequest;
 import com.erica.gamsung.gpt.dto.GptResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,14 +19,11 @@ public class GptService {
 
     private final StringListConverter stringListConverter = new StringListConverter();
 
-    @Value("${openai.model}")
+    @Value("${openai.api.model}")
     private String model;
 
     @Value("${openai.api.url}")
     private String apiUrl;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     private String getPrompt(Posting posting) {
         String menu = posting.getMenu();
@@ -44,6 +40,9 @@ public class GptService {
         return prompt;
     }
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     public List<String> getContents(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
@@ -53,24 +52,20 @@ public class GptService {
         GptRequest request = new GptRequest(model, prompt);
         GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
 
-        String ans = response.getChoices().get(0).getMessage().getContent();
+        List<String> contents = stringListConverter.convertToEntityAttribute(
+                response.getChoices().get(0).getMessage().getContent()
+        );
 
-        return stringListConverter.convertToEntityAttribute(ans);
+        posting.setContents(contents);
+        postingRepository.save(posting);
+
+        return contents;
     }
 
-    @Scheduled(fixedRate = 60000) // 1분마다 실행
-    public void updateContents() {
-        List<Posting> postings = postingRepository.findAll();
+    public String chat(String prompt) {
+        GptRequest request = new GptRequest(model, prompt);
+        GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
 
-        for (Posting posting : postings) {
-
-            if (posting.getContents() == null || posting.getContents().isEmpty()) {
-                List<String> contents = getContents(posting.getReservationId());
-
-                posting.setContents(contents);
-
-                postingRepository.save(posting);
-            }
-        }
+        return response.getChoices().get(0).getMessage().getContent();
     }
 }
