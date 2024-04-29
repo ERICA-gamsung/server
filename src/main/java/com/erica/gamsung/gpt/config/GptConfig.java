@@ -11,9 +11,6 @@ public class GptConfig {
     @Value("${openai.api.key}")
     private String openAiKey;
 
-//    @Value("${jasypt.encryptor.password")
-//    private String PASSWORD_KEY;
-
     @Bean
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
