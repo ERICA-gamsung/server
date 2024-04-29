@@ -36,6 +36,17 @@ public class PostingService {
         return new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState());
     }
 
+    public List<PostingStateResponse> getStateList() {
+        List<Posting> postings = postingRepository.findAll();
+        List<PostingStateResponse> responseList = new ArrayList<>();
+
+        for (Posting posting : postings) {
+            responseList.add(new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState()));
+        }
+
+        return responseList;
+    }
+
     public DeletePosting delete(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
