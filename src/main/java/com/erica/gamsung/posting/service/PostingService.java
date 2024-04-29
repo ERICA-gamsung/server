@@ -81,8 +81,8 @@ public class PostingService {
 
         return requestList;
     }
-    public void postPosting(PostPostingRequest posting,Long postingId){
-        Optional<Posting> optionalPost = postingRepository.findById(postingId);
+    public void postPosting(PostPostingRequest posting,Long reservationId){
+        Optional<Posting> optionalPost = postingRepository.findById(reservationId);
         final Posting post;
         if(optionalPost.isPresent()){
             post = optionalPost.get();

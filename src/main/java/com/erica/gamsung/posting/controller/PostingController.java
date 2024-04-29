@@ -56,9 +56,9 @@ public class PostingController {
 
         return postingService.postOption(requests);
     }
-    @PostMapping("api/v1/postings/post/{postingId}")
-    public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long postingId){
-        postingService.postPosting(posting,postingId);
+    @PostMapping("api/v1/postings/post/{reservationId}")
+    public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
+        postingService.postPosting(posting,reservationId);
         return;
     }
 }
