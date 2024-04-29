@@ -5,8 +5,10 @@ import com.erica.gamsung.posting.utils.StringListConverter;
 
 import com.erica.gamsung.gpt.dto.GptRequest;
 import com.erica.gamsung.gpt.dto.GptResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,10 +34,16 @@ public class GptService {
 
         String prompt = String.format("""
                     나는 음식점을 운영하고 있어. 내 음식점을 홍보하기 위한 홍보 문구를 작성해. 홍보 문구는 홍보할 메뉴, 이벤트, 고객에게 전달하고 싶은 메시지 등을 고려해서 3가지 버전으로 작성하는데 "@" 기호를 구분자로 각 버전 사이에 사용하고 줄 바꿈 문자는 사용하면 안돼.
-                    홍보할 메뉴 :  %s
-                    이벤트 : %s
-                    고객에게 전달하고 싶은 메시지 : %s
-                    """, menu, event, message);
+                    """);
+        if (menu != null) {
+            prompt += String.format("홍보할 메뉴 : %s\n", menu);
+        }
+        if (event != null) {
+            prompt += String.format("이벤트 : %s\n", event);
+        }
+        if (message != null) {
+            prompt += String.format("고객에게 전달하고 싶은 메시지 : %s\n", message);
+        }
 
         return prompt;
     }
@@ -43,7 +51,9 @@ public class GptService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<String> getContents(Long reservationId) {
+    @Transactional
+    @Async("threadPoolTaskExecutor")
+    public void getContents(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
@@ -57,9 +67,6 @@ public class GptService {
         );
 
         posting.setContents(contents);
-        postingRepository.save(posting);
-
-        return contents;
     }
 
     public String chat(String prompt) {
