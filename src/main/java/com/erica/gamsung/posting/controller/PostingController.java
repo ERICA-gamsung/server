@@ -1,9 +1,6 @@
 package com.erica.gamsung.posting.controller;
 
-import com.erica.gamsung.posting.service.PostingDetailResponse;
-import com.erica.gamsung.posting.service.PostingService;
-import com.erica.gamsung.posting.service.PostingStateResponse;
-import com.erica.gamsung.posting.service.PostingOptionRequest;
+import com.erica.gamsung.posting.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +55,11 @@ public class PostingController {
     public List<PostingOptionRequest> PostingOption(@RequestBody List<PostingOptionRequest> requests) {
 
         return postingService.postOption(requests);
+    }
+    @PostMapping("api/v1/postings/post/{reservationId}")
+    public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
+        postingService.postPosting(posting,reservationId);
+        return;
     }
 }
 
