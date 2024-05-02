@@ -1,14 +1,10 @@
 package com.erica.gamsung.posting.controller;
 
-import com.erica.gamsung.posting.service.PostingDetailResponse;
-import com.erica.gamsung.posting.service.PostingService;
-import com.erica.gamsung.posting.service.PostingStateResponse;
-import lombok.Getter;
+import com.erica.gamsung.posting.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController // @Controller + @ResponseBody
 @RequiredArgsConstructor    // final 붙은 멤버들에 대해서 생성자를 롬복이 만들어준다.
@@ -25,26 +21,45 @@ public class PostingController {
 //        this.postingService = postingService;
 //    }
 
-    @GetMapping("/api/v1/postings/{postingId}")
-    public PostingDetailResponse getPostingDetail(@PathVariable Long postingId) {
-        return postingService.getDetail(postingId);
-//        return new PostingDetailResponse(
-//                posting_id,
-//                "http://example.s3.com/image1.jpg",
-//                null,
-//                LocalDateTime.now(),
-//                List.of("안녕하세요", "우리 가게로 놀러오세요", "반갑습니다")
-//        );
+    @GetMapping("/api/v1/postings/{reservationId}")
+    public PostingDetailResponse getPostingDetail(@PathVariable Long reservationId) {
+
+        return postingService.getDetail(reservationId);
     }
 
-    @GetMapping("/api/v1/postings/{postingId}/state")
-    public PostingStateResponse getPostingState(@PathVariable Long postingId) {
-        return postingService.getState(postingId);
+    @GetMapping("/api/v1/postings/{reservationId}/state")
+    public PostingStateResponse getPostingState(@PathVariable Long reservationId) {
+
+        return postingService.getState(reservationId);
     }
 
-    @DeleteMapping("/api/v1/postings/{postingId}/delete")
-    public void deletePosting(@PathVariable Long postingId) {
-        postingService.delete(postingId);
+    @GetMapping("/api/v1/postings/state")
+    public List<PostingStateResponse> getPostingStateList() {
+
+        return postingService.getStateList();
+    }
+
+    @DeleteMapping("/api/v1/postings/{reservationId}/delete")
+    public void deletePosting(@PathVariable Long reservationId) {
+
+        postingService.delete(reservationId);
+    }
+
+//    @PostMapping("/api/v1/postings/{reservationId}/option")
+//    public PostingOptionRequest PostingOption(@RequestBody PostingOptionRequest requests, @PathVariable Long reservationId) {
+//
+//        return postingService.postOption(requests);
+//    }
+
+    @PostMapping("/api/v1/postings/option")
+    public List<PostingOptionRequest> PostingOption(@RequestBody List<PostingOptionRequest> requests) {
+
+        return postingService.postOption(requests);
+    }
+    @PostMapping("api/v1/postings/post/{reservationId}")
+    public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
+        postingService.postPosting(posting,reservationId);
+        return;
     }
 }
 

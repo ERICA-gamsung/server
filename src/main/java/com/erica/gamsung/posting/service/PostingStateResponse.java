@@ -1,20 +1,23 @@
 package com.erica.gamsung.posting.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 public class PostingStateResponse {
-    private Long id;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime reservedAt;
+    private Long reservationId;
+
+    private LocalDate date;
+    private LocalTime time;
+
     private String state;
 
-    public PostingStateResponse(Long id, LocalDateTime reservedAt, String state) {
-        this.id = id;
-        this.reservedAt = reservedAt;
+    public PostingStateResponse(Long reservationId, LocalDate date, LocalTime time, String state) {
+        this.reservationId = reservationId;
+        this.date = date;
+        this.time = time;
         this.state = state;
     }
 }
