@@ -1,5 +1,6 @@
 package com.erica.gamsung.posting.service;
 
+import com.erica.gamsung.gpt.service.GptService;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
@@ -18,15 +19,17 @@ import java.util.Optional;
 //@Component
 @Service
 public class PostingService {
-
     @Autowired
     private PostingRepository postingRepository;
+
+    @Autowired
+    private GptService gptService;
 
     public PostingDetailResponse getDetail(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
-        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getImageUrl(), posting.getFixedContent(), posting.getContents());
+        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getContents(), posting.getFixedContent(), posting.getImageUrl());
     }
 
     public PostingStateResponse getState(Long reservationId) {
@@ -47,13 +50,11 @@ public class PostingService {
         return responseList;
     }
 
-    public DeletePosting delete(Long reservationId) {
+    public void delete(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
         postingRepository.delete(posting);
-
-        return new DeletePosting(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage(), posting.getContents(), posting.getFixedContent(), posting.getImageUrl(), posting.getState());
     }
 
     public List<PostingOptionRequest> postOption(List<PostingOptionRequest> requests) {
@@ -62,13 +63,12 @@ public class PostingService {
         for (PostingOptionRequest request : requests) {
             Posting posting = new Posting(
                     1L,
-                    request.getReservationId(),
                     request.getDate(),
                     request.getTime(),
                     request.getMenu(),
                     request.getEvent(),
                     request.getMessage(),
-                    List.of("", "", ""),
+                    List.of(""),
                     "",
                     List.of(""),
                     "yet"
@@ -76,11 +76,14 @@ public class PostingService {
 
             postingRepository.save(posting);
 
-            requestList.add(new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
+            gptService.getContents(posting.getReservationId());
+
+            requestList.add(new PostingOptionRequest(posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
 
         return requestList;
     }
+
     public void postPosting(PostPostingRequest posting,Long reservationId){
         Optional<Posting> optionalPost = postingRepository.findById(reservationId);
         final Posting post;
@@ -103,6 +106,7 @@ public class PostingService {
         }
         postingRepository.save(post);
     }
+
     @PostConstruct
     public void init() {
         // 데이터가 이미 존재하면 바로 리턴
@@ -134,9 +138,9 @@ public class PostingService {
                 "4명당 음료수 1개 무료",
                 "새학기 힘내세요!",
                 List.of("오늘은 1000원 할인", "라멘 드세요", "너만 오면 고!"),
-                null,
+                "안녕하세요! 오늘은 돈코츠 라멘이 준비되어 있습니다. 많이 오세요!",
                 List.of("http://example.s3.com/image2.png"),
-                "not_fix"
+                "yet"
         );
 
         Posting posting3 = new Posting(

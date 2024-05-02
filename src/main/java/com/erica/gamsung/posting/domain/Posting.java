@@ -11,8 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
@@ -32,11 +31,26 @@ public class Posting {
     private String message;
 
     @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "varchar(1000)")
     private List<String> contents;
     private String fixedContent;
 
     @Convert(converter = ImageUrListConverter.class)
     private List<String> imageUrl;
+
+    public Posting(Long userid, LocalDate date, LocalTime time, String menu, String event, String message,
+                   List<String> contents, String fixedContent, List<String> imageUrl, String state) {
+        this.userid = userid;
+        this.date = date;
+        this.time = time;
+        this.menu = menu;
+        this.event = event;
+        this.message = message;
+        this.contents = contents;
+        this.fixedContent = fixedContent;
+        this.imageUrl = imageUrl;
+        this.state = state;
+    }
 
     /*
      * yet : 글 3개가 발행조차 되지 않은 상태

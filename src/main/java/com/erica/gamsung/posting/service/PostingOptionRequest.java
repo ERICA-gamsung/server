@@ -7,8 +7,6 @@ import java.time.LocalTime;
 
 @Getter
 public class PostingOptionRequest {
-    private Long reservationId;
-
     private LocalDate date;
     private LocalTime time;
 
@@ -16,8 +14,7 @@ public class PostingOptionRequest {
     private String event;
     private String message;
 
-    public PostingOptionRequest(Long reservationId, LocalDate date, LocalTime time, String menu, String event, String message) {
-        this.reservationId = reservationId;
+    public PostingOptionRequest(LocalDate date, LocalTime time, String menu, String event, String message) {
         this.date = date;
         this.time = time;
         this.menu = menu;
