@@ -1,9 +1,11 @@
 package com.erica.gamsung.posting.service;
 
+import com.erica.gamsung.gpt.service.GptService;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,9 +16,11 @@ import java.util.List;
 //@Component
 @Service
 public class PostingService {
-
     @Autowired
     private PostingRepository postingRepository;
+
+    @Autowired
+    private GptService gptService;
 
     public PostingDetailResponse getDetail(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
@@ -56,6 +60,7 @@ public class PostingService {
         for (PostingOptionRequest request : requests) {
             Posting posting = new Posting(
                     1L,
+                    request.getReservationId(),
                     request.getDate(),
                     request.getTime(),
                     request.getMenu(),
@@ -69,7 +74,9 @@ public class PostingService {
 
             postingRepository.save(posting);
 
-            requestList.add(new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
+            gptService.getContents(posting.getReservationId());
+
+            requestList.add(new PostingOptionRequest(posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
 
         return requestList;
