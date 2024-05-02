@@ -28,3 +28,8 @@ springdoc:
   swagger-ui:
     path: /api-test
 
+openai :
+  api :
+    model : gpt-3.5-turbo
+    key : ENC(L8Py5aToNuhTwWFyFS4rcAuKvnr7/QIoq1NjGlKBCRgHqWoyLt9AXI8EhO4WXi0D7TTSNFQVSPOg8qq7fKD9JQ==)
+    url : https://api.openai.com/v1/chat/completions
