@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -66,15 +65,7 @@ public class GptService {
         List<String> contents = stringListConverter.convertToEntityAttribute(
                 response.getChoices().get(0).getMessage().getContent()
         );
-//        List<String> contents2 = Arrays.stream(response.getChoices().get(0).getMessage().getContent().split("@")).toList();
 
         posting.setContents(contents);
-    }
-
-    public String chat(String prompt) {
-        GptRequest request = new GptRequest(model, prompt);
-        GptResponse response = restTemplate.postForObject(apiUrl, request, GptResponse.class);
-
-        return response.getChoices().get(0).getMessage().getContent();
     }
 }
