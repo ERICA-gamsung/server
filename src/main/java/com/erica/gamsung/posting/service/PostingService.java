@@ -63,7 +63,6 @@ public class PostingService {
         for (PostingOptionRequest request : requests) {
             Posting posting = new Posting(
                     1L,
-                    request.getReservationId(),
                     request.getDate(),
                     request.getTime(),
                     request.getMenu(),
@@ -77,13 +76,9 @@ public class PostingService {
 
             postingRepository.save(posting);
 
-//            applicationEventPublisher.publishEvent(new ApplicationEvent(new PostingEvent(this, request.getReservationId())) {
-//            });
+            gptService.getContents(posting.getReservationId());
 
-            gptService.getContents(request.getReservationId());
-
-
-            requestList.add(new PostingOptionRequest(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
+            requestList.add(new PostingOptionRequest(posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
 
         return requestList;

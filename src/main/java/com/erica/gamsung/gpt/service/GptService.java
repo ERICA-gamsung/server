@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -33,7 +34,7 @@ public class GptService {
         String message = posting.getMessage();
 
         String prompt = String.format("""
-                    나는 음식점을 운영하고 있어. 내 음식점을 홍보하기 위한 홍보 문구를 작성해. 홍보 문구는 홍보할 메뉴, 이벤트, 고객에게 전달하고 싶은 메시지 등을 고려해서 3가지 버전으로 작성하는데 "@" 기호를 구분자로 각 버전 사이에 사용하고 줄 바꿈 문자는 사용하면 안돼.
+                    나는 음식점을 운영하고 있어. 내 음식점을 홍보하기 위한 홍보 문구를 작성해. 홍보 문구는 홍보할 메뉴, 이벤트, 고객에게 전달하고 싶은 메시지가 있으면 고려해서 3가지  작성해. 각 버전 사이에는 "@" 기호를 구분자로 사용하고 줄 바꿈 문자는 사용하면 안돼.
                     """);
         if (menu != null) {
             prompt += String.format("홍보할 메뉴 : %s\n", menu);
@@ -65,6 +66,7 @@ public class GptService {
         List<String> contents = stringListConverter.convertToEntityAttribute(
                 response.getChoices().get(0).getMessage().getContent()
         );
+//        List<String> contents2 = Arrays.stream(response.getChoices().get(0).getMessage().getContent().split("@")).toList();
 
         posting.setContents(contents);
     }
