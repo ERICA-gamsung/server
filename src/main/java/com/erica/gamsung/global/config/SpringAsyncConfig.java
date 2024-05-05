@@ -1,4 +1,4 @@
-package com.erica.gamsung;
+package com.erica.gamsung.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

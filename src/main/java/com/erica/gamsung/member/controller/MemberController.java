@@ -18,6 +18,6 @@ public class MemberController{
     @PostMapping(path = "token")
     public void PostToken(@RequestBody PostTokenRequest postTokenRequest){
         memberService.postToken(postTokenRequest);
-        System.out.println(postTokenRequest.token());
+        //System.out.println(postTokenRequest.token());
     }
 }

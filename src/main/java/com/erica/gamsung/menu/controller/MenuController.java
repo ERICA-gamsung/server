@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/menu")
-public class MenuController {
+public class
+MenuController {
     final private MenuService menuService;
     @GetMapping(path="get/{userId}")
     public List<MenuListResponse> getMenuList(@PathVariable("userId") Long userId){

@@ -7,32 +7,15 @@ spring:
   h2:
     console:
       enabled: true
-<<<<<<< HEAD
-=======
       path: /h2-console
->>>>>>> 9fe72b991299e7a3bed421b470b9f5e6a1df3c49
       settings:
         web-allow-others: true
   jpa:
     open-in-view: false
-<<<<<<< HEAD
-#    database-platform: org.hibernate.dialect.H2Dialect
-#    hibernate:
-#      ddl-auto: create
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.H2Dialect
-#        format_sql: true
-#        show_sql: true
-
+    hibernate:
+      ddl-auto: update
   profiles:
     include: oauth
-  aws:
-    stack:
-      auto: false
-=======
-    hibernate:
-      ddl-auto:update
 
   cloud:
     aws:
@@ -42,22 +25,18 @@ spring:
         static: AP_NORTHEAST_2
       stack:
         auto: false
->>>>>>> 9fe72b991299e7a3bed421b470b9f5e6a1df3c49
 
 springdoc:
   swagger-ui:
     path: /api-test
-
-<<<<<<< HEAD
-#server:
-#  ssl:
-#    key-store: keystore.p12
-#    key-store-password:
-#    key-store-type: PKCS12
-=======
+server:
+  ssl:
+    key-store: keystore.p12
+    key-store-password:
+    key-store-type: PKCS12
+    enabled: true
 openai :
   api :
     model : gpt-3.5-turbo
     key : ENC(L8Py5aToNuhTwWFyFS4rcAuKvnr7/QIoq1NjGlKBCRgHqWoyLt9AXI8EhO4WXi0D7TTSNFQVSPOg8qq7fKD9JQ==)
     url : https://api.openai.com/v1/chat/completions
->>>>>>> 9fe72b991299e7a3bed421b470b9f5e6a1df3c49

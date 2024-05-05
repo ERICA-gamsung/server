@@ -1,4 +1,4 @@
-package com.erica.gamsung;
+package com.erica.gamsung.global.config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.jasypt.encryption.StringEncryptor;
