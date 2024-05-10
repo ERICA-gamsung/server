@@ -1,4 +1,7 @@
 package com.erica.gamsung.image.service;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
@@ -27,8 +30,14 @@ import java.util.Objects;
 @Service
 public class ImageService {
     private final PostingRepository postingRepository;
+//    @Value("${cloud.aws.credentials.accessKey}")
+//    private String accessKey;
+//
+//    @Value("${cloud.aws.credentials.secretKey}")
+//    private String secretKey;
     private String bucketName = "gamsung-bucket";
     public List<String> uploadImage(PostImageRequest postImageRequest,Long reservationId){
+//        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         Posting post = postingRepository.findById(reservationId).get();
         int count = 1;
         post.setImageUrl(new ArrayList<>());
@@ -44,6 +53,7 @@ public class ImageService {
                 default:
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN,"jpg,png 파일만 가능합니다.");
             }
+//            final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
             final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
             try {
                 String fileName = "";

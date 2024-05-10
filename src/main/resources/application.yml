@@ -18,14 +18,14 @@ spring:
     multipart:
       max-file-size: 5MB
 
-  cloud:
-    aws:
-      credentials:
-        profile-name: default
-      region:
-        static: AP_NORTHEAST_2
-      stack:
-        auto: false
+cloud:
+  aws:
+    credentials:
+      profile-name: default
+    region:
+      static: AP_NORTHEAST_2
+    stack:
+      auto: false
 
 springdoc:
   swagger-ui:
