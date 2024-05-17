@@ -27,7 +27,7 @@ spring:
         auto: false
   data:
     redis:
-      host: localhost
+      host: 43.201.245.61
       port: 6379
   cache:
     type: redis

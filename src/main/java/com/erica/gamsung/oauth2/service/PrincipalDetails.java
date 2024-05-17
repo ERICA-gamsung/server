@@ -1,4 +1,4 @@
-package com.erica.gamsung.oauth2;
+package com.erica.gamsung.oauth2.service;
 
 import com.erica.gamsung.member.domain.Member;
 import lombok.AllArgsConstructor;
@@ -31,5 +31,17 @@ public class PrincipalDetails implements OAuth2User {
     @Override
     public String getName() {
         return "name";
+    }
+
+    public static class InstagramMemberInfo {
+        private Map<String, Object> attributes;
+
+        public InstagramMemberInfo(Map<String, Object> attributes) {
+            attributes.get("id");
+        }
+
+        public Long getProviderId() {
+            return (Long) attributes.get("id");
+        }
     }
 }

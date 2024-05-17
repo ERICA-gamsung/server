@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     private final MemberRepository memberRepository;
     public void postToken(PostTokenRequest postTokenRequest){
-//new member인지 기존 멤버인지 확인
+        //new member인지 기존 멤버인지 확인
         //refreshToken 발급 필요
     }
 }

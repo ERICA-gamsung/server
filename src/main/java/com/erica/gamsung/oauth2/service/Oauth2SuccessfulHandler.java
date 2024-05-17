@@ -1,4 +1,4 @@
-package com.erica.gamsung.oauth2;
+package com.erica.gamsung.oauth2.service;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +17,6 @@ public class Oauth2SuccessfulHandler extends SimpleUrlAuthenticationSuccessHandl
             HttpServletResponse response,
             Authentication authentication)
             throws IOException, ServletException {
-        response.sendRedirect("http://localhost:3000");
+        response.sendRedirect("https://gamsung.shop");
     }
 }

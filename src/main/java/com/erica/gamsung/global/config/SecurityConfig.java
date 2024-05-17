@@ -1,9 +1,9 @@
 package com.erica.gamsung.global.config;
 
-import com.erica.gamsung.oauth2.CustomAuthorizationRequestResolver;
-import com.erica.gamsung.oauth2.OAuth2MemberService;
-import com.erica.gamsung.oauth2.Oauth2SuccessfulHandler;
-import com.erica.gamsung.oauth2.repository.Oauth2MemoRepository;
+import com.erica.gamsung.global.config.redis.RedisUtils;
+import com.erica.gamsung.oauth2.service.CustomAuthorizationRequestResolver;
+import com.erica.gamsung.oauth2.service.OAuth2MemberService;
+import com.erica.gamsung.oauth2.service.Oauth2SuccessfulHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SecurityConfig {
     private final OAuth2MemberService oAuth2MemberService;
     private final Oauth2SuccessfulHandler oauth2SuccessfulHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
-    private final Oauth2MemoRepository oauth2MemoRepository;
+    private final RedisUtils redisUtils;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(HttpBasicConfigurer::disable)
@@ -36,7 +36,8 @@ public class SecurityConfig {
                                 .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig.authorizationRequestResolver(
                                         new CustomAuthorizationRequestResolver(
                                                 this.clientRegistrationRepository,"/oauth2/authorization",
-                                                oauth2MemoRepository)
+                                                redisUtils
+                                                )
                                 ))
                                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(oAuth2MemberService))
                                 .successHandler(oauth2SuccessfulHandler)

@@ -1,9 +1,6 @@
 package com.erica.gamsung.member.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Map;
@@ -17,13 +14,16 @@ public class Member{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String provider;
-    private Long providerId;
+    private String providerId;
     private String storeName;
     private String role;
+    @Column(length = 1024)
+    private String accessToken;
     @Builder
-    public Member(String provider, Long providerId,String role) {
+    public Member(String provider,String providerId,String role,String accessToken) {
         this.provider = provider;
         this.providerId = providerId;
         this.role = role;
+        this.accessToken = accessToken;
     }
 }

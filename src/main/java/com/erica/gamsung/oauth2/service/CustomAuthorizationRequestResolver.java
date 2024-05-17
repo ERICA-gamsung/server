@@ -1,7 +1,5 @@
-package com.erica.gamsung.oauth2;
-
-import com.erica.gamsung.oauth2.domain.OAuth2Memo;
-import com.erica.gamsung.oauth2.repository.Oauth2MemoRepository;
+package com.erica.gamsung.oauth2.service;
+import com.erica.gamsung.global.config.redis.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -14,11 +12,14 @@ import java.util.Map;
 public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRequestResolver {
     private final OAuth2AuthorizationRequestResolver defaultAuthorizationRequestResolver;
     private final ClientRegistrationRepository clientRegistrationRepository;
-    private final Oauth2MemoRepository oauth2MemoRepository;
-    public CustomAuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository, String authorizationRequestBaseUri, Oauth2MemoRepository oauth2MemoRepository){
-        this.oauth2MemoRepository = oauth2MemoRepository;
+    private final RedisUtils redisUtils;
+    public CustomAuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository,
+                                              String authorizationRequestBaseUri,
+                                              RedisUtils redisUtils
+                                              ){
         defaultAuthorizationRequestResolver = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository,authorizationRequestBaseUri);
         this.clientRegistrationRepository = clientRegistrationRepository;
+        this.redisUtils = redisUtils;
     }
     @Override
     public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
@@ -42,13 +43,12 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
             OAuth2AuthorizationRequest authorizationRequest,HttpServletRequest request) {
         Map<String, Object> additionalParameters =
                 new LinkedHashMap<>(authorizationRequest.getAdditionalParameters());
-        additionalParameters.put("test", request.getParameter("test"));
+        additionalParameters.put("uuid", request.getParameter("uuid"));
         OAuth2AuthorizationRequest oAuth2AuthorizationRequest = OAuth2AuthorizationRequest.from(authorizationRequest)
                 .additionalParameters(additionalParameters)
-                .authorizationUri("https://www.facebook.com/v19.0/dialog/oauth?test="+request.getParameter("test"))
+                .authorizationUri("https://www.facebook.com/v19.0/dialog/oauth")
                 .build();
-        OAuth2Memo oAuth2Memo = OAuth2Memo.builder().clientId(oAuth2AuthorizationRequest.getClientId()).uuid(request.getParameter("test")).build();
-        oauth2MemoRepository.save(oAuth2Memo);
+        redisUtils.setData(oAuth2AuthorizationRequest.getClientId(),request.getParameter("uuid"),300000L);
         return oAuth2AuthorizationRequest;
     }
 }
