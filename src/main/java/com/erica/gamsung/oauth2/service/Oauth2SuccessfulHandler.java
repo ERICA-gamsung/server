@@ -17,6 +17,6 @@ public class Oauth2SuccessfulHandler extends SimpleUrlAuthenticationSuccessHandl
             HttpServletResponse response,
             Authentication authentication)
             throws IOException, ServletException {
-        response.sendRedirect("https://gamsung.shop");
+        response.sendRedirect("https://43.201.245.61:8080/login/oauth2/facebook");
     }
 }
