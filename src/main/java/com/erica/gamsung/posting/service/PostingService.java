@@ -137,8 +137,8 @@ public class PostingService {
                 "돈코츠 라멘",
                 "4명당 음료수 1개 무료",
                 "새학기 힘내세요!",
-                List.of("오늘은 1000원 할인", "라멘 드세요", "너만 오면 고!"),
-                "안녕하세요! 오늘은 돈코츠 라멘이 준비되어 있습니다. 많이 오세요!",
+                List.of("", "", ""),
+                "",
                 List.of("http://example.s3.com/image2.png"),
                 "yet"
         );
