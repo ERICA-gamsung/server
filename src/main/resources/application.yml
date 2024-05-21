@@ -40,12 +40,12 @@ spring:
 springdoc:
   swagger-ui:
     path: /api-test
-server:
-  ssl:
-    key-store: keystore.p12
-    key-store-password:
-    key-store-type: PKCS12
-    enabled: true
+#server:
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password:
+#    key-store-type: PKCS12
+#    enabled: true
 openai :
   api :
     model : gpt-3.5-turbo
