@@ -47,11 +47,11 @@ public class ImageService {
                 case "image/jpeg":
                     type = ".jpeg";
                     break;
-                case "image/png":
-                    type=".png";
-                    break;
+//                case "image/png":
+//                    type=".png";
+//                    break;
                 default:
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,"jpg,png 파일만 가능합니다.");
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,"jpeg 파일만 가능합니다.");
             }
 //            final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.AP_NORTHEAST_2).build();
             final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
