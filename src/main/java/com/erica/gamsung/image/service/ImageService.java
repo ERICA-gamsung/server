@@ -47,9 +47,9 @@ public class ImageService {
                 case "image/jpeg":
                     type = ".jpeg";
                     break;
-//                case "image/png":
-//                    type=".png";
-//                    break;
+                case "image/png":
+                    type=".png";
+                    break;
                 default:
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN,"jpeg 파일만 가능합니다.");
             }
