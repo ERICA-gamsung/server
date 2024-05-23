@@ -1,9 +1,12 @@
 package com.erica.gamsung.posting.service;
 
 import com.erica.gamsung.gpt.service.GptService;
+import com.erica.gamsung.member.domain.Member;
+import com.erica.gamsung.member.repository.MemberRepository;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,12 +21,16 @@ import java.util.Optional;
 
 //@Component
 @Service
+@RequiredArgsConstructor
 public class PostingService {
     @Autowired
     private PostingRepository postingRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private GptService gptService;
+    private final PostingUploadService postingUploadService;
 
     public PostingDetailResponse getDetail(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
@@ -57,12 +64,13 @@ public class PostingService {
         postingRepository.delete(posting);
     }
 
-    public List<PostingOptionRequest> postOption(List<PostingOptionRequest> requests) {
+    public List<PostingOptionRequest> postOption(Long memberId,List<PostingOptionRequest> requests) {
         List<PostingOptionRequest> requestList = new ArrayList<>();
-
         for (PostingOptionRequest request : requests) {
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
             Posting posting = new Posting(
-                    1L,
+                    member,
                     request.getDate(),
                     request.getTime(),
                     request.getMenu(),
@@ -78,7 +86,7 @@ public class PostingService {
 
             gptService.getContents(posting.getReservationId());
 
-            requestList.add(new PostingOptionRequest(posting.getDate(), posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
+            requestList.add(new PostingOptionRequest(posting.getDate(),posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
 
         return requestList;
@@ -100,6 +108,7 @@ public class PostingService {
         }
         else if(!(post.getImageUrl()==null)){
             post.setState("ready");
+            postingUploadService.postingUpload(post);
         }
         else{
             post.setState("not_fix");
@@ -116,7 +125,7 @@ public class PostingService {
 
         // 더미 데이터 작성
         Posting posting1 = new Posting(
-                1L,
+                null,
                 1L,
                 LocalDate.of(2024, 1, 24),
                 LocalTime.of(17, 0),
@@ -130,7 +139,7 @@ public class PostingService {
         );
 
         Posting posting2 = new Posting(
-                1L,
+                null,
                 2L,
                 LocalDate.of(2024, 3, 4),
                 LocalTime.of(9, 0),
@@ -144,7 +153,7 @@ public class PostingService {
         );
 
         Posting posting3 = new Posting(
-                1L,
+                null,
                 3L,
                 LocalDate.of(2024, 4, 2),
                 LocalTime.of(12, 30),

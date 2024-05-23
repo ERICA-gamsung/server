@@ -1,4 +1,5 @@
 package com.erica.gamsung.posting.domain;
+import com.erica.gamsung.member.domain.Member;
 import com.erica.gamsung.posting.utils.ImageUrListConverter;
 import com.erica.gamsung.posting.utils.StringListConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posting {
-    private Long userid;
+    @ManyToOne
+    private Member member;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
@@ -38,9 +40,9 @@ public class Posting {
     @Convert(converter = ImageUrListConverter.class)
     private List<String> imageUrl;
 
-    public Posting(Long userid, LocalDate date, LocalTime time, String menu, String event, String message,
+    public Posting(Member member, LocalDate date, LocalTime time, String menu, String event, String message,
                    List<String> contents, String fixedContent, List<String> imageUrl, String state) {
-        this.userid = userid;
+        this.member = member;
         this.date = date;
         this.time = time;
         this.menu = menu;

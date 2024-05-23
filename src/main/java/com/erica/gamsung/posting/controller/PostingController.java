@@ -51,10 +51,9 @@ public class PostingController {
 //        return postingService.postOption(requests);
 //    }
 
-    @PostMapping("/api/v1/postings/option")
-    public List<PostingOptionRequest> PostingOption(@RequestBody List<PostingOptionRequest> requests) {
-
-        return postingService.postOption(requests);
+    @PostMapping("/api/v1/postings/option/{memberId}")
+    public List<PostingOptionRequest> PostingOption(@PathVariable Long memberId, @RequestBody List<PostingOptionRequest> requests) {
+        return postingService.postOption(memberId, requests);
     }
     @PostMapping("api/v1/postings/post/{reservationId}")
     public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
