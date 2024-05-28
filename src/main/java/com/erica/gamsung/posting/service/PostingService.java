@@ -71,10 +71,10 @@ public class PostingService {
         postingRepository.delete(posting);
     }
 
-    public List<PostingOptionRequest> postOption(Long memberId,List<PostingOptionRequest> requests) {
+    public List<PostingOptionRequest> postOption(String token,List<PostingOptionRequest> requests) {
         List<PostingOptionRequest> requestList = new ArrayList<>();
         for (PostingOptionRequest request : requests) {
-            Member member = memberRepository.findById(memberId)
+            Member member = memberRepository.findByAccessToken(token)
                     .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
             Posting posting = new Posting(
                     member,

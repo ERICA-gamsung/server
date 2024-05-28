@@ -4,6 +4,7 @@ import com.erica.gamsung.posting.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 
 @RestController // @Controller + @ResponseBody
@@ -51,9 +52,10 @@ public class PostingController {
 //        return postingService.postOption(requests);
 //    }
 
-    @PostMapping("/api/v1/postings/option/{memberId}")
-    public List<PostingOptionRequest> PostingOption(@PathVariable Long memberId, @RequestBody List<PostingOptionRequest> requests) {
-        return postingService.postOption(memberId, requests);
+    @PostMapping(path="/api/v1/postings/option",headers = "Authorization")
+    public List<PostingOptionRequest> PostingOption(@RequestHeader String Authorization, @RequestBody List<PostingOptionRequest> requests) {
+        String token = Authorization.replace("Bearer ", "").trim();
+        return postingService.postOption(token, requests);
     }
     @PostMapping("api/v1/postings/post/{reservationId}")
     public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
