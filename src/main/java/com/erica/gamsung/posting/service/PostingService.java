@@ -9,15 +9,22 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 //@Component
 @Service
@@ -108,7 +115,15 @@ public class PostingService {
         }
         else if(!(post.getImageUrl()==null)){
             post.setState("ready");
-            postingUploadService.postingUpload(post);
+//            postingUploadService.postingUpload(post);
+            ScheduledExecutorService excutorService = Executors.newScheduledThreadPool(1);
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime targetTime = LocalDateTime.of(post.getDate(),post.getTime());
+            long delay = ChronoUnit.MINUTES.between(now,targetTime);
+            excutorService.schedule(()->{
+                postingUploadService.postingUpload(post);
+                excutorService.shutdown();
+            },delay, TimeUnit.MINUTES);
         }
         else{
             post.setState("not_fix");
