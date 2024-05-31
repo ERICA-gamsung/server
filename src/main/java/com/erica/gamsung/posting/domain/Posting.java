@@ -35,6 +35,7 @@ public class Posting {
     @Convert(converter = StringListConverter.class)
     @Column(columnDefinition = "varchar(1000)")
     private List<String> contents;
+    @Column(columnDefinition = "varchar(1000)")
     private String fixedContent;
 
     private String imageUrl;
