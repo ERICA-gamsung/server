@@ -73,9 +73,9 @@ public class PostingService {
 
     public List<PostingOptionRequest> postOption(String token,List<PostingOptionRequest> requests) {
         List<PostingOptionRequest> requestList = new ArrayList<>();
+        Member member = memberRepository.findByAccessToken(token)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
         for (PostingOptionRequest request : requests) {
-            Member member = memberRepository.findByAccessToken(token)
-                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
             Posting posting = new Posting(
                     member,
                     request.getDate(),
