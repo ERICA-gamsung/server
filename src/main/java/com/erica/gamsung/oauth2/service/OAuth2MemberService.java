@@ -19,7 +19,6 @@ import java.util.Optional;
 @Transactional
 public class OAuth2MemberService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
-    private final ClientRegistrationRepository clientRegistrationRepository;
     private final RedisUtils redisUtils;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
