@@ -1,0 +1,13 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.erica.gamsung",
+    "sha256_cert_fingerprints":
+    [
+      "C2:2C:65:23:9E:B9:43:6B:86:5E:FD:44:71:12:E7:C2:D6:D7:36:8A:3B:13:DC:6C:0B:30:F0:27:08:AF:AD:C3",
+      "B3:EA:CB:34:2F:69:E9:6F:AB:7A:5E:7B:28:16:FC:5B:A2:7D:E5:A7:33:3B:EE:21:63:EF:2D:FA:36:B5:17:BA",
+      "01:34:A4:AF:8B:C0:53:14:15:EC:EF:F5:DF:7F:0F:BE:ED:4A:FE:AE:9A:3B:40:D7:CD:7F:61:39:62:CA:39:20"
+    ]
+  }
+}]
