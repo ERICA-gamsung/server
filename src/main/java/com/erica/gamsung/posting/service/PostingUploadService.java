@@ -25,8 +25,8 @@ public class PostingUploadService {
         log.info("pageId : "+pageId);
         Long instagramId = getInstagramId(pageId,token);
         log.info("instagramId : "+instagramId);
-//        String imageUrl = posting.getImageUrl().get(0);
-        String imageUrl = "https://gamsung-bucket.s3.ap-northeast-2.amazonaws.com/5_1.jpeg";
+        String imageUrl = posting.getImageUrl();
+//        String imageUrl = "https://gamsung-bucket.s3.ap-northeast-2.amazonaws.com/5_1.jpeg";
         Long itemContainerId = setItemContainerId(imageUrl,posting.getFixedContent(),instagramId,token);
         log.info("member : "+member+" token : "+token+" pageId : "+pageId+" instagramId : "+instagramId+" itemContainerId : "+itemContainerId);
         postingSingleUpload(instagramId,itemContainerId,token);

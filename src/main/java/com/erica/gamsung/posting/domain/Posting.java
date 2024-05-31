@@ -37,8 +37,7 @@ public class Posting {
     private List<String> contents;
     private String fixedContent;
 
-    @Convert(converter = ImageUrListConverter.class)
-    private List<String> imageUrl;
+    private String imageUrl;
 
     public Posting(Member member, LocalDate date, LocalTime time, String menu, String event, String message,
                    List<String> contents, String fixedContent, List<String> imageUrl, String state) {
@@ -50,7 +49,7 @@ public class Posting {
         this.message = message;
         this.contents = contents;
         this.fixedContent = fixedContent;
-        this.imageUrl = imageUrl;
+        this.imageUrl = imageUrl.get(0);
         this.state = state;
     }
 

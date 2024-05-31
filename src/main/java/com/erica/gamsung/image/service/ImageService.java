@@ -40,7 +40,6 @@ public class ImageService {
 //        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         Posting post = postingRepository.findById(reservationId).get();
         int count = 1;
-        post.setImageUrl(new ArrayList<>());
         for(MultipartFile file : postImageRequest.files()){
             String type = Objects.requireNonNull(file.getContentType());
             switch (type){
@@ -63,9 +62,8 @@ public class ImageService {
                 metadata.setContentLength(file.getSize());
                 amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(),metadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-                List<String> listUrl = new ArrayList<>(post.getImageUrl());
-                listUrl.add(amazonS3.getUrl(bucketName,fileName).toString());
-                post.setImageUrl(listUrl);
+                String imageUrl = amazonS3.getUrl(bucketName, fileName).toString();
+                post.setImageUrl(imageUrl);
                 postingRepository.save(post);
             }
             catch (AmazonS3Exception e) {
@@ -75,6 +73,6 @@ public class ImageService {
                 throw new RuntimeException(e);
             }
         }
-        return postingRepository.findById(reservationId).get().getImageUrl();
+        return List.of(postingRepository.findById(reservationId).get().getImageUrl());
     }
 }
