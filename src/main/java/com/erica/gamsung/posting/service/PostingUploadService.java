@@ -5,21 +5,32 @@ import com.erica.gamsung.posting.domain.Posting;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PostingUploadService {
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
     public void postingUpload(Posting posting){
+        log.info("postingUpload");
         Member member = posting.getMember();
+        log.info("member : "+member);
         String token = member.getAccessToken();
+        log.info("token : "+token);
         Long pageId = getPageId(token);
+        log.info("pageId : "+pageId);
         Long instagramId = getInstagramId(pageId,token);
-        Long itemContainerId = setItemContainerId(posting.getImageUrl().get(0),posting.getFixedContent(),instagramId,token);
+        log.info("instagramId : "+instagramId);
+//        String imageUrl = posting.getImageUrl().get(0);
+        String imageUrl = "https://gamsung-bucket.s3.ap-northeast-2.amazonaws.com/5_1.jpeg";
+        Long itemContainerId = setItemContainerId(imageUrl,posting.getFixedContent(),instagramId,token);
+        log.info("member : "+member+" token : "+token+" pageId : "+pageId+" instagramId : "+instagramId+" itemContainerId : "+itemContainerId);
         postingSingleUpload(instagramId,itemContainerId,token);
+        log.info("postingSingleUpload");
 //        if(posting.getImageUrl().size()>1){
 //            String imageContainerIdList = "";
 //            for(String imageUrl:posting.getImageUrl()){
@@ -57,6 +68,7 @@ public class PostingUploadService {
         return  instagramId.asLong();
     }
     public Long setItemContainerId(String imageUrl,String content,Long instagramId, String token){
+        log.info("imageUrl : "+imageUrl+" content : "+content+" instagramId : "+instagramId+" token : "+token);
         Object object = webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder
@@ -64,6 +76,9 @@ public class PostingUploadService {
                         .queryParam("image_url",imageUrl)
                         .queryParam("caption",content)
                         .queryParam("access_token",token)
+                        .queryParam("locale", "ko_KR")
+                        .queryParam("transport", "cors")
+                        .queryParam("origin_graph_explorer", 1)
                         .build()
                 )
                 .retrieve()
@@ -73,12 +88,16 @@ public class PostingUploadService {
         return containerId.asLong();
     }
     public Object postingSingleUpload(Long instagramId, Long itemId, String token){
+        log.info("instagramId : "+instagramId+" itemId : "+itemId+" token : "+token);
             return webClient
                     .post()
                     .uri(uriBuilder -> uriBuilder
                             .path("/"+instagramId+"/media_publish")
                             .queryParam("creation_id",itemId)
                             .queryParam("access_token",token)
+                            .queryParam("locale", "ko_KR")
+                            .queryParam("transport", "cors")
+                            .queryParam("origin_graph_explorer", 1)
                             .build()
                     )
                     .retrieve()
