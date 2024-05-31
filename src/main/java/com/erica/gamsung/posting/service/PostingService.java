@@ -122,6 +122,8 @@ public class PostingService {
             long delay = ChronoUnit.MINUTES.between(now,targetTime);
             excutorService.schedule(()->{
                 postingUploadService.postingUpload(post);
+                post.setState("done");
+                postingRepository.save(post);
                 excutorService.shutdown();
             },delay, TimeUnit.MINUTES);
         }
