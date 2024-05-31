@@ -116,15 +116,15 @@ public class PostingService {
         else if(!(post.getImageUrl()==null)){
             post.setState("ready");
 //            postingUploadService.postingUpload(post);
-            ScheduledExecutorService excutorService = Executors.newScheduledThreadPool(1);
+            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime targetTime = LocalDateTime.of(post.getDate(),post.getTime());
             long delay = ChronoUnit.MINUTES.between(now,targetTime);
-            excutorService.schedule(()->{
+            executorService.schedule(()->{
                 postingUploadService.postingUpload(post);
                 post.setState("done");
                 postingRepository.save(post);
-                excutorService.shutdown();
+                executorService.shutdown();
             },delay, TimeUnit.MINUTES);
         }
         else{
