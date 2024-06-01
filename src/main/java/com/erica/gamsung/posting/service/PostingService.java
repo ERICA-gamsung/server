@@ -7,6 +7,8 @@ import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,10 +27,12 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 //@Component
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostingService {
     @Autowired
     private PostingRepository postingRepository;
@@ -38,12 +42,13 @@ public class PostingService {
     @Autowired
     private GptService gptService;
     private final PostingUploadService postingUploadService;
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
 
     public PostingDetailResponse getDetail(Long reservationId) {
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
 
-        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getContents(), posting.getFixedContent(), posting.getImageUrl());
+        return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getContents(), posting.getFixedContent(), List.of(posting.getImageUrl()));
     }
 
     public PostingStateResponse getState(Long reservationId) {
@@ -73,9 +78,9 @@ public class PostingService {
 
     public List<PostingOptionRequest> postOption(String token,List<PostingOptionRequest> requests) {
         List<PostingOptionRequest> requestList = new ArrayList<>();
+        Member member = memberRepository.findByAccessToken(token)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
         for (PostingOptionRequest request : requests) {
-            Member member = memberRepository.findByAccessToken(token)
-                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
             Posting posting = new Posting(
                     member,
                     request.getDate(),
@@ -116,13 +121,14 @@ public class PostingService {
         else if(!(post.getImageUrl()==null)){
             post.setState("ready");
 //            postingUploadService.postingUpload(post);
-            ScheduledExecutorService excutorService = Executors.newScheduledThreadPool(1);
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime targetTime = LocalDateTime.of(post.getDate(),post.getTime());
             long delay = ChronoUnit.MINUTES.between(now,targetTime);
-            excutorService.schedule(()->{
+            log.info("now : "+now + " target : "+targetTime + " delay : "+delay);
+            executorService.schedule(()->{
                 postingUploadService.postingUpload(post);
-                excutorService.shutdown();
+                post.setState("done");
+                postingRepository.save(post);
             },delay, TimeUnit.MINUTES);
         }
         else{
@@ -149,7 +155,7 @@ public class PostingService {
                 null,
                 List.of("우리 가게로 놀러오세요!", "오늘 요리 맛있습니다!", "너만 오면 고!"),
                 "안녕하세요! 오늘은 김치찌개가 준비되어 있습니다. 많이 오세요!",
-                List.of("http://example.s3.com/image1.png"),
+                "http://example.s3.com/image1.png",
                 "ready"
         );
 
@@ -163,7 +169,7 @@ public class PostingService {
                 "새학기 힘내세요!",
                 List.of("", "", ""),
                 "",
-                List.of("http://example.s3.com/image2.png"),
+                "http://example.s3.com/image2.png",
                 "yet"
         );
 
@@ -177,7 +183,7 @@ public class PostingService {
                 "신메뉴 시식해보세요",
                 List.of("와 정말 맛있다!", "오늘 요리 맛있습니다!", "잘먹었습니다!"),
                 "안녕하세요! 오늘은 제육볶음이 준비되어 있습니다. 많이 오세요!",
-                List.of("http://example.s3.com/image3.png"),
+                "http://example.s3.com/image3.png",
                 "done"
         );
 
