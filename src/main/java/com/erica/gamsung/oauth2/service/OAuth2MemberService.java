@@ -35,12 +35,18 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
             String uuid = redisUtils.getData(userRequest.getClientRegistration().getClientId());
             redisUtils.setData(uuid,providerId,300000L); //5분
             Member member;
-            member = Member.builder()
-                    .provider(provider)
-                    .role(role)
-                    .providerId(providerId)
-                    .accessToken(userRequest.getAccessToken().getTokenValue())
-                    .build();
+            if(findMember.isEmpty()){
+                member = Member.builder()
+                        .provider(provider)
+                        .role(role)
+                        .providerId(providerId)
+                        .accessToken(userRequest.getAccessToken().getTokenValue())
+                        .build();
+            }
+            else{
+                member = findMember.orElseThrow(()->new IllegalArgumentException("로그인 오류"));
+                member.setAccessToken(userRequest.getAccessToken().getTokenValue());
+            }
             memberRepository.save(member);
             return new PrincipalDetails(member, oAuth2User.getAttributes());
 //        } catch(Exception e) {
