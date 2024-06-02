@@ -7,15 +7,12 @@ import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,7 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 //@Component
 @Service
@@ -51,22 +48,11 @@ public class PostingService {
         return new PostingDetailResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getContents(), posting.getFixedContent(), List.of(posting.getImageUrl()));
     }
 
-    public PostingStateResponse getState(Long reservationId) {
-        Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
-                new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
+    public List<StateListResponse> getStateList(Long id) {
+        List<Posting> postings = postingRepository.findAllByMemberId(id);
+        List<StateListResponse> StateListResponses = postings.stream().map(StateListResponse::new).collect(Collectors.toList());
 
-        return new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState());
-    }
-
-    public List<PostingStateResponse> getStateList() {
-        List<Posting> postings = postingRepository.findAll();
-        List<PostingStateResponse> responseList = new ArrayList<>();
-
-        for (Posting posting : postings) {
-            responseList.add(new PostingStateResponse(posting.getReservationId(), posting.getDate(), posting.getTime(), posting.getState()));
-        }
-
-        return responseList;
+        return StateListResponses;
     }
 
     public void delete(Long reservationId) {

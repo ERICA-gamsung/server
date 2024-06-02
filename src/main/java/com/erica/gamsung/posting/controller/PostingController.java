@@ -28,16 +28,10 @@ public class PostingController {
         return postingService.getDetail(reservationId);
     }
 
-    @GetMapping("/api/v1/postings/{reservationId}/state")
-    public PostingStateResponse getPostingState(@PathVariable Long reservationId) {
+    @GetMapping("/api/v1/postings/{id}/state")
+    public List<StateListResponse> getPostingStateList(@PathVariable("id") Long id) {
 
-        return postingService.getState(reservationId);
-    }
-
-    @GetMapping("/api/v1/postings/state")
-    public List<PostingStateResponse> getPostingStateList() {
-
-        return postingService.getStateList();
+        return postingService.getStateList(id);
     }
 
     @DeleteMapping("/api/v1/postings/{reservationId}/delete")
