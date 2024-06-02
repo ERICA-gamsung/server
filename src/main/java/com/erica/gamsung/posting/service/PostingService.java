@@ -80,6 +80,7 @@ public class PostingService {
         List<PostingOptionRequest> requestList = new ArrayList<>();
         Member member = memberRepository.findByAccessToken(token)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
+        List<Posting> postingList = new ArrayList<>();
         for (PostingOptionRequest request : requests) {
             Posting posting = new Posting(
                     member,
@@ -95,12 +96,12 @@ public class PostingService {
             );
 
             postingRepository.save(posting);
-
+            postingList.add(posting);
             gptService.getContents(posting.getReservationId());
-
             requestList.add(new PostingOptionRequest(posting.getDate(),posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
-
+        member.setPostings(postingList);
+        memberRepository.save(member);
         return requestList;
     }
 
