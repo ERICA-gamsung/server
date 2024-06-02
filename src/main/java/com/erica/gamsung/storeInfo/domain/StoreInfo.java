@@ -1,5 +1,6 @@
 package com.erica.gamsung.storeInfo.domain;
 
+import com.erica.gamsung.member.domain.Member;
 import com.erica.gamsung.storeInfo.service.CreateStoreInfoRequest;
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,8 @@ import java.time.LocalTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class StoreInfo {
+    @OneToOne
+    private Member member;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

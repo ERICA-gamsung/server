@@ -51,6 +51,7 @@ public class PostingController {
         String token = Authorization.replace("Bearer ", "").trim();
         return postingService.postOption(token, requests);
     }
+
     @PostMapping("api/v1/postings/post/{reservationId}")
     public void postPosting(@RequestBody PostPostingRequest posting, @PathVariable Long reservationId){
         postingService.postPosting(posting,reservationId);

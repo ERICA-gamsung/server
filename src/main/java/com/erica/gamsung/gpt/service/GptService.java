@@ -1,10 +1,14 @@
 package com.erica.gamsung.gpt.service;
+import com.erica.gamsung.member.domain.Member;
+import com.erica.gamsung.member.repository.MemberRepository;
 import com.erica.gamsung.posting.domain.Posting;
 import com.erica.gamsung.posting.repository.PostingRepository;
 import com.erica.gamsung.posting.utils.StringListConverter;
 
 import com.erica.gamsung.gpt.dto.GptRequest;
 import com.erica.gamsung.gpt.dto.GptResponse;
+import com.erica.gamsung.storeInfo.domain.StoreInfo;
+import com.erica.gamsung.storeInfo.repository.StoreInfoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +16,16 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class GptService {
     @Autowired
     private PostingRepository postingRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private StoreInfoRepository storeInfoRepository;
 
     private final StringListConverter stringListConverter = new StringListConverter();
 
@@ -73,9 +80,15 @@ public class GptService {
 
     @Transactional
     @Async("threadPoolTaskExecutor")
-    public void getContents(Long reservationId) {
+    public void getContents(String token, Long reservationId) {
+        Member member = memberRepository.findByAccessToken(token)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 member id입니다."));
+
         Posting posting = postingRepository.findById(reservationId).orElseThrow(() ->
                 new IllegalArgumentException("Posting이 존재하지 않습니다. postingId: " + reservationId));
+
+        StoreInfo storeInfo = storeInfoRepository.findByToken(token).orElseThrow(() ->
+                new IllegalArgumentException("StoreInfo가 존재하지 않습니다. storeInfoId: " + member.getId());
 
         String prompt = getPrompt(posting);
 

@@ -83,7 +83,7 @@ public class PostingService {
 
             postingRepository.save(posting);
             postingList.add(posting);
-            gptService.getContents(posting.getReservationId());
+            gptService.getContents(token, posting.getReservationId());
             requestList.add(new PostingOptionRequest(posting.getDate(),posting.getTime(), posting.getMenu(), posting.getEvent(), posting.getMessage()));
         }
         member.setPostings(postingList);
