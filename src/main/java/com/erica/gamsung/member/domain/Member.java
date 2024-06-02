@@ -22,7 +22,7 @@ public class Member{
     private String role;
     @Column(length = 1024)
     private String accessToken;
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Posting> postings;
 //    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
 //    private List<Menu> menu;
