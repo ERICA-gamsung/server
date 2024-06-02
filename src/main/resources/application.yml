@@ -1,13 +1,8 @@
 spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: admin
-    password: gamsung99
-    url: jdbc:mariadb://database-gamsung.c1gceoygmthk.ap-northeast-2.rds.amazonaws.com:3306/gamsungdb
   jpa:
 #    open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
