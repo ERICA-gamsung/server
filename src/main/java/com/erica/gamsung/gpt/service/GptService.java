@@ -38,7 +38,7 @@ public class GptService {
         String prompt = String.format("""
                     내가 운영하는 음식점을 소개하고 싶어. 내 음식점을 홍보하기 위한 홍보 글를 작성해줘.
                     글 작성 시 고려해야 할 사항 :
-                    1. 각 홍보 글은 최소 5문장 이상으로 작성해.
+                    1. 각 홍보 글은 최소 3문장 이상으로 작성해.
                     """);
         if (menu != null) {
             prompt += String.format("%d. 홍보하고싶은 메뉴는 %s(이)야. %s 맛집으로 홍보를 해.\n", cnt, menu, menu);
