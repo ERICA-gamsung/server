@@ -19,7 +19,7 @@ public class Member{
     private Long id;
     private String provider;
     private String providerId;
-    private String storeName;
+//    private String storeName;
     private String role;
     @Column(length = 1024)
     private String accessToken;
