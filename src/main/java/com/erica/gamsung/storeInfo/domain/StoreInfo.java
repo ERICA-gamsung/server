@@ -9,16 +9,12 @@ import lombok.*;
 
 import java.time.LocalTime;
 
-@Entity
+@Embeddable
+//@Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class StoreInfo {
-    @OneToOne
-    private Member member;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private String type; // 식당, 카페
 
