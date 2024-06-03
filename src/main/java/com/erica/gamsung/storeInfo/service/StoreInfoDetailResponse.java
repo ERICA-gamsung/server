@@ -20,7 +20,6 @@ import java.time.LocalTime;
 
 @Builder(access = AccessLevel.PRIVATE)
 public record StoreInfoDetailResponse(
-        Long id,
         String name,
         String type,
 
@@ -35,7 +34,6 @@ public record StoreInfoDetailResponse(
 ) {
     public static StoreInfoDetailResponse from(StoreInfo storeInfo) {
         return StoreInfoDetailResponse.builder()
-                .id(storeInfo.getId())
                 .name(storeInfo.getName())
                 .type(storeInfo.getType())
                 .openTime(storeInfo.getOpenTime())

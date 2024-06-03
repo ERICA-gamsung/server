@@ -14,23 +14,17 @@ import java.sql.SQLException;
 public class StoreInfoController {
     private final StoreInfoService storeInfoService;
 
-    @GetMapping("/api/v1/storeInfos/{storeInfoId}")
-    public StoreInfoDetailResponse getStoreInfoDetail(@PathVariable Long storeInfoId) {
+    @GetMapping("/api/v1/storeInfos/{memberId}")
+    public StoreInfoDetailResponse getStoreInfoDetail(@PathVariable Long memberId) {
 
-        return storeInfoService.getDetail(storeInfoId);
+        return storeInfoService.getDetail(memberId);
     }
 
-    @PostMapping("/api/v1/storeInfos/post")
-    public CreateStoreInfoRequest createStoreInfoDetail(@RequestBody CreateStoreInfoRequest request) {
-
-        return storeInfoService.createDetail(request);
-    }
-
-    @PutMapping("/api/v1/storeInfos/{storeInfoId}")
+    @PutMapping("/api/v1/storeInfos/{memberId}")
     public UpdateStoreInfoRequest updateStoreInfoDetail(
-            @PathVariable Long storeInfoId,
+            @PathVariable Long memberId,
             @RequestBody UpdateStoreInfoRequest request) {
-        return storeInfoService.updateDetail(storeInfoId, request);
+        return storeInfoService.updateDetail(memberId, request);
     }
 
 }

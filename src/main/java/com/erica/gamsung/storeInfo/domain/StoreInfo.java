@@ -1,5 +1,6 @@
 package com.erica.gamsung.storeInfo.domain;
 
+import com.erica.gamsung.member.domain.Member;
 import com.erica.gamsung.storeInfo.service.CreateStoreInfoRequest;
 import com.erica.gamsung.storeInfo.service.UpdateStoreInfoRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,14 +9,12 @@ import lombok.*;
 
 import java.time.LocalTime;
 
-@Entity
+@Embeddable
+//@Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class StoreInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private String type; // 식당, 카페
 
