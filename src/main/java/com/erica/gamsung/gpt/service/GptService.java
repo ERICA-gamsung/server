@@ -58,7 +58,7 @@ public class GptService {
             prompt += String.format("%d. 고객들에게 \"%s\"라는 말을 전하고 싶어. 작성할 글의 스타일에 맞게 수정해서 추가해.\n", ++cnt, message);
         }
 
-        prompt += String.format("%d. 마지막에는 해시태그를 작성해. #%s, #맛집, #메뉴이름, #이벤트이름 등을 포함해서 작성해.\n", ++cnt, storeName);
+        prompt += String.format("%d. 마지막에는 해시태그를 작성해.\n", ++cnt);
         prompt += String.format("%d. 출력 예시는 꼭 지켜야 해.\n", ++cnt);
 
         prompt += String.format("""
